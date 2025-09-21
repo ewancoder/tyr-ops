@@ -3,8 +3,13 @@
 ## My keys inventory
 
 - Git (gpg) - main key for signing commits for personal projects, including signing subkey
+  - Master ID: 98B0943EC4A3CA88
+  - Signing ID (ivanpc): A57116EE67BF8798
   - Public key is uploaded to GitHub
 - NameOfWorkCompany (gpg) - signing commits for work, including signing subkey
+  - Master ID: 689985CE63F245C9
+  - Signing ID (ivanpc): D6335448AD610A55
+  - Signing ID (ivanlaptop-win): 2359493617E1C282
 - Main PC SSH keys
   - domain - connection to main DigitalOcean droplet
   - doworker - connection to worker DigitalOcean droplet
