@@ -101,6 +101,8 @@ If we ever need to centrally store these keys - these files should be renamed to
 To generate a keypair:
 
 - `ssh-keygen -C "comment"`
+- `ssh-keygen -C "user@host-purpose" (ewancoder, ivanpc, domain/github)
+  - filename: id_ed25519_domain/github
 
 ### Connecting
 
