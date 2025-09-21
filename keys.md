@@ -48,6 +48,8 @@ My locations:
 
 Use difficult unique passwords for specific keys (use comment/purpose of the key as salt).
 
+Consider using different subkeys for different machines - this allows checking later which machine actually did commits (assuming I have a mapping between key ID -> machine).
+
 ### Generating
 
 - `gpg --full-generate-key`
@@ -80,6 +82,22 @@ The part after `/` is the key ID. SEC - master key. SSB - subkeys.
 This is needed for uploading the public master key to e.g. GitHub to get a verified status.
 
 `gpg --armor --export MASTER_KEY_ID`
+
+### Exporting a signing subkey to another machine
+
+- `gpg --export-secret-subkeys SUBKEY_ID! > subkey.gpg`
+- then on another machine: `gpg --import subkey.gpg`
+
+If you need to also be able to verify signatures on second machine, you need a public key as well:
+
+- `gpg --export --armor MASTER_KEY_ID > publickey.asc`
+- `gpg --import publickey.asc`
+
+In order to not see "unknown/untrusted" messages in git log, do the following:
+
+- `gpg --edit-key MASTER_ID` (will work even without exporting a public key)
+- `trust`, select 5 (ultimate trust) for own key
+- quit
 
 ## SSH
 
