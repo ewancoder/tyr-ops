@@ -1,5 +1,13 @@
 # Keys
 
+## My keys inventory
+
+- Git (gpg) - main key for signing commits for personal projects, including signing subkey
+  - Public key is uploaded to GitHub
+- Main PC SSH keys
+  - domain - connection to main DigitalOcean droplet
+  - doworker - connection to worker DigitalOcean droplet
+
 ## Security
 
 All keys (both GPG and SSH) should have 700/600 permissions so that nobody else can view them but you.
