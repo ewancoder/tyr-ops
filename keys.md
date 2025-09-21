@@ -13,6 +13,7 @@
 - Main PC SSH keys
   - domain - connection to main DigitalOcean droplet
   - doworker - connection to worker DigitalOcean droplet
+  - github - personal github account
 
 ## Security
 
