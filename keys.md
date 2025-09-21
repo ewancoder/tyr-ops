@@ -4,6 +4,7 @@
 
 - Git (gpg) - main key for signing commits for personal projects, including signing subkey
   - Public key is uploaded to GitHub
+- NameOfWorkCompany (gpg) - signing commits for work, including signing subkey
 - Main PC SSH keys
   - domain - connection to main DigitalOcean droplet
   - doworker - connection to worker DigitalOcean droplet
