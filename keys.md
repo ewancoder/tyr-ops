@@ -14,6 +14,13 @@
   - domain - connection to main DigitalOcean droplet
   - doworker - connection to worker DigitalOcean droplet
   - github - personal github account
+- PATs - personal access tokens / access tokens for different systems
+  - Work - (security)/work
+    - deployment-monitor-pat
+      - 1 year expiration (21/09/2026)
+      - wiki read & write
+      - release read
+      - build read
 
 ## Security
 
