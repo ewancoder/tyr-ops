@@ -25,12 +25,14 @@
 ## Security
 
 All keys (both GPG and SSH) should have 700/600 permissions so that nobody else can view them but you.
+
 Easy way to ensure this:
 
-`chmod -R u=rwX,go= ~/.ssh`
-`chmod -R u=rwX,go= ~/.gnupg`
+- `chmod -R u=rwX,go= ~/.ssh`
+- `chmod -R u=rwX,go= ~/.gnupg`
 
 Uppercase `X` ensures that executable permission is given only to:
+
 1. Folders
 2. Files that already had executable permission anyway
 
@@ -38,17 +40,19 @@ Uppercase `X` ensures that executable permission is given only to:
 
 ## Algorithms
 
-RSA - old, slow, big size
-ECC (Ed25519) - new, fast, small size
+- RSA - old, slow, big size
+- ECC (Ed25519) - new, fast, small size
 
 The only downside of ECC is that it might not be supported everywhere.
+
 I'm sticking with ECC for my keys.
 
 ## GPG
 
 GPG - GNU Privacy Guard - a tool for encrypting, decrypting, and signing data.
-  - Altertative of proprietary software PGP (pretty good privacy), started in 1997.
-  - Made by Werner Koch (German).
+
+- Altertative of proprietary software PGP (pretty good privacy), started in 1997.
+- Made by Werner Koch (German).
 
 Usage scenarios:
 
@@ -110,7 +114,7 @@ In order to not see "unknown/untrusted" messages in git log, do the following:
 
 - `gpg --edit-key MASTER_ID` (will work even without exporting a public key)
 - `trust`, select 5 (ultimate trust) for own key
-- quit
+- `quit`
 
 ## SSH
 
@@ -123,19 +127,22 @@ Use simple password for SSH keys (just so that there IS password).
 
 ### Generating
 
-Default algorithm is ED25519.
-Comment can be tweaked later, but it requires changing both public and private keys.
-Default comment is usually "username@hostname".
-The default comment identifies WHO and FROM WHERE you are trying to connect. But it doesn't identify TO WHERE you are trying to connect.
-This is fine in general, because usually you reuse the same SSH key for multiple different systems.
-However, for more granular control (if you make different keys to access different systems), it makes sense tweaking the default comment a bit:
+- Default algorithm is ED25519.
 
-`username@hostname-target`
-`ivan@laptop-domain`
-`ivan@laptop-github`
+Comment can be tweaked later, but it requires changing both public and private keys. Default comment is usually "username@hostname".
+
+The default comment identifies WHO and FROM WHERE you are trying to connect. But it doesn't identify TO WHERE you are trying to connect.
+
+This is fine in general, because usually you reuse the same SSH key for multiple different systems. However, for more granular control (if you make different keys to access different systems), it makes sense tweaking the default comment a bit:
+
+- `username@hostname-target`
+- `ivan@laptop-domain`
+- `ivan@laptop-github`
 
 Filename pattern: `id_ed25519_postfix`, e.g. on ivan@laptop machine, to connect to github: `id_ed25519_github`.
+
 Since we do not include the "who" in the name of the key - keys should not be shared between machines (each machine generates its own).
+
 If we ever need to centrally store these keys - these files should be renamed to specify the "who".
 
 To generate a keypair:
