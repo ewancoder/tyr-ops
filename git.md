@@ -1,5 +1,13 @@
 # Git
 
+## Connecting using SSH
+
+Assuming you have `myalias` host configured in SSH config, use the following command:
+
+`git@myalias:any-other-required-parts`
+
+User might be different. Check "clone" action on your hosting for a proper URL and replace the actual hostname (e.g. github.com) with your alias.
+
 ## Signing commits
 
 Refer to [keys.md](keys.md) to check the guide on how to create GPG keys.
