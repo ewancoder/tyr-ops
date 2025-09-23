@@ -14,6 +14,10 @@
   - domain - connection to main DigitalOcean droplet
   - doworker - connection to worker DigitalOcean droplet
   - github - personal github account
+- Laptop SSH keys
+  - (workname) - connection to work repositories
+    - RSA `-t RSA` unfortunately - Azure doesn't support ED
+    - Comment: "workusername@ivanlaptop-workname"
 - PATs - personal access tokens / access tokens for different systems
   - Work - (security)/work
     - deployment-monitor-pat
