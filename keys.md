@@ -20,6 +20,8 @@
     - file: `..._github2domain`
     - storage: `~/.ssh/remote` folder (not in root)
     - Used for all repos deployment. I can't be arsed to have a separate ssh key for each project.
+  - github2dev - connection from github actions to dev PC (ivanpc)
+    - It is added to `authorized_hosts` of `github` user on my machine - specific user for deployments
 - Laptop SSH keys
   - (workname) - connection to work repositories
     - RSA `-t RSA` unfortunately - Azure doesn't support ED
@@ -33,6 +35,8 @@
       - build read
 
 ## Security
+
+Edit `/etc/ssh/sshd_config` `Port` property to specify custom port, both on servers and on my PC.
 
 All keys (both GPG and SSH) should have 700/600 permissions so that nobody else can view them but you.
 
