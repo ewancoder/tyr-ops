@@ -53,6 +53,6 @@ For example, **any** node that has `infra` or `worker` label, should have folder
 
 At this time, we only have one of each: `prod` (production) and `dev` (development).
 
-For development environment, we store the data on the PC at: `/mnt/data/pet`, individual project folders are located there and are symlinked to `/data`.
+For development environment, we store the data on the PC at: `/mnt/data/pet`, this folder is symlinked to `/data/pet` and deployments are done to `/data/pet/project`, not `/data/project`, when deploying to dev env, for convenience of management on personal PC.
 
 > When copying configs between servers while moving between environments - make sure to actually edit `secrets.env` files for the specific environment, not to allow for example `dev` environment to write into `prod` database.
