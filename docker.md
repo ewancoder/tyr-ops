@@ -2,6 +2,22 @@
 
 I'm using Docker for all my pet projects deployments, so this article will mostly contain my specific TyR setup.
 
+## User setup
+
+To allow user to use docker without the sudo command, add it to the `docker` group:
+
+- `sudo usermod -aG docker myuser`
+- `newgrp docker` - applies the group changes without needing to sign out
+
+## TyR user setup
+
+- I have a `tyr` user for deployments, id 2000, that's in the `docker` group.
+    - `sudo useradd -u 2000 -m -s /bin/bash tyr`
+    - `sudo passwd -l tyr`
+    - `sudo usermod -aG docker tyr`
+- Additionally, add the needed public key to `~/.ssh/authorized_keys` for SSH connection.
+- All project files are 600/700 and chown-ed by this user (unless created by the container).
+
 ## Swarm
 
 Useful commands:
@@ -56,3 +72,51 @@ At this time, we only have one of each: `prod` (production) and `dev` (developme
 For development environment, we store the data on the PC at: `/mnt/data/pet`, this folder is symlinked to `/data/pet` and deployments are done to `/data/pet/project`, not `/data/project`, when deploying to dev env, for convenience of management on personal PC.
 
 > When copying configs between servers while moving between environments - make sure to actually edit `secrets.env` files for the specific environment, not to allow for example `dev` environment to write into `prod` database.
+
+> When deploying **Development** environment in **Swarm** configuration - we should also have the **secrets.env** / data folder in the `/data/pet/projectname` location **on the Swarm MASTER node**, as it is the **Swarm MASTER** that performs the deployment and needs these secrets. This is an important note that should be incorporated into the TyR deployment flow. Due to the nature of development environmens - we only need secrets on the master node, nothing else. Everything else runs on the personal PC (but personal PC probably also needs secrets).
+
+> Due to the fact that we need to store a bunch of duplicated secrets on all the nodes - it is very relevant to migrate to some kind of centralized key/vault solution as soon as possible! Until this is done - do not forget to update the secrets in ALL the relevant places / nodes.
+
+## Rootless Docker setup
+
+> WARNING: this setup will not work with Swarm, Swarm requires root privileges. This is for running a separate Docker instance in a rootless mode.
+
+This example creates a user with ID 2000, and name "github" that has a personal Rootless Docker instance.
+
+- `sudo useradd -u 2000 -m -s /bin/bash github`, `-m` creates home directory
+- `sudo passwd -l github` - locks the account so it can't use password
+- `sudo -iu github` - simulates login with this user
+- `curl -fsSL https://get.docker.com/rootless | sh` - installs local user-scoped copy of rootless docker
+- Add variables from printed instructions to ~/.bashrc (for SSH sessions)
+  - `export PATH=$HOME/bin:$PATH`
+  - `export XDG_RUNTIME_DIR=$HOME/.docker/run`
+  - `export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock`
+- `source ~/.bashrc`
+- `dockerd-rootless.sh` (to check)
+- `loginctl enable-linger github` - allow services to run even with user logged out
+  - `loginctl show-user github` - check Linger property
+
+Put the following into `~/.config/systemd/user/docker.service`:
+
+```
+[Unit]
+Description=Rootless Docker Daemon
+After=network.target
+
+[Service]
+ExecStart=/home/github/bin/dockerd-rootless.sh
+Restart=always
+Environment=PATH=/home/github/bin:/usr/bin:/bin
+Environment=XDG_RUNTIME_DIR=/home/github/.docker/run
+Environment=DOCKER_HOST=unix:///home/github/.docker/run/docker.sock
+
+[Install]
+WantedBy=default.target
+```
+
+- `export XDG_RUNTIME_DIR=/run/user/$(id -u)` - starts a temporary user-scoped systemd session so we don't need to reboot to continue setting it up
+- `systemctl --user daemon-reload`
+- `systemctl --user enable docker.service`
+- `systemctl --user start docker.service`
+- `docker info` - should show **Rootless: true**
+- `reboot`
