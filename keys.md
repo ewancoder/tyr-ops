@@ -11,9 +11,15 @@
   - Signing ID (ivanpc): D6335448AD610A55
   - Signing ID (ivanlaptop-win): 2359493617E1C282
 - Main PC SSH keys
-  - domain - connection to main DigitalOcean droplet
+  - domain - connection to main DigitalOcean droplet (comment: ewancoder@ivanpc-domain)
   - doworker - connection to worker DigitalOcean droplet
   - github - personal github account
+- TyR infra SSH keys (stored on Main PC)
+  - github2domain - connection from github actions to do-main server
+    - comment: ewancoder@github-domain
+    - file: `..._github2domain`
+    - storage: `~/.ssh/remote` folder (not in root)
+    - Used for all repos deployment. I can't be arsed to have a separate ssh key for each project.
 - Laptop SSH keys
   - (workname) - connection to work repositories
     - RSA `-t RSA` unfortunately - Azure doesn't support ED
