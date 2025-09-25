@@ -10,9 +10,9 @@
   - Master ID: 689985CE63F245C9
   - Signing ID (ivanpc): D6335448AD610A55
   - Signing ID (ivanlaptop-win): 2359493617E1C282
-- Main PC SSH keys
-  - domain - connection to main DigitalOcean droplet (comment: ewancoder@ivanpc-domain)
-  - doworker - connection to worker DigitalOcean droplet
+- Main PC SSH keys (multiple aliases can be specified like this: `Host do-main-lon domain`
+  - domain - (do-main-lon) connection to main DigitalOcean droplet (comment: ewancoder@ivanpc-domain)
+  - doworker - (do-worker-lon-1) connection to worker DigitalOcean droplet
   - github - personal github account
 - TyR infra SSH keys (stored on Main PC)
   - github2domain - connection from github actions to do-main server

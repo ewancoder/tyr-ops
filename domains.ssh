@@ -1,0 +1,7 @@
+# Domains
+
+For convenience, these domains are set up on the CloudFlare:
+
+- `worker.ssh.typingrealm.org` - main DO worker (do-worker-lon-1)
+- `nyc.worker.ssh.typingrealm.org` - secondary region NYC DO worker (do-worker-nyc-1)
+- `ssh.typingrealm.org` or just `typingrealm.org` - main DO server (do-main-lon)
