@@ -36,6 +36,7 @@ Since nodes are not tags, we cannot set multiple values for the same key. So we 
 - **do-main** - Digital Ocean main (manager) node
   - Label: infra=true
   - Label: worker=true
+  - Label: id=domain - this is used when we need to deploy something 100% to a SINGLE main node
 - **do-worker** - Digital Ocean worker node
   - Label: worker=true
 - **ivanpc** - My current PC
