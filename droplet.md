@@ -154,3 +154,16 @@ Add the user to docker group:
 - `sudo usermod -aG docker tyr`
 - `newgrp docker` & reconnect
 
+## Join to Swarm
+
+On the leader node:
+
+- `docker swarm join-token worker` - make sure IP address is the WireGuard IP
+
+Then use whatever is printed on the new droplet (follower node), just add `--advertise-addr [wireguard IP]`.
+
+Update label to add it as a worker to my network:
+
+`docker node update --label-add worker=true NODE_NAME`
+
+> At this point, Swarm will already deploy worker services to this node when possible.
