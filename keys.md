@@ -33,6 +33,10 @@
       - wiki read & write
       - release read
       - build read
+- TyR other keys
+  - DP - data protection PFX key
+    - Currently stored at `/root/dp.pfx`, should be copied to every droplet / be the same
+    - Currently copies are only on droplets, not on my machine
 
 ## Security
 

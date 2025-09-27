@@ -154,6 +154,15 @@ Add the user to docker group:
 - `sudo usermod -aG docker tyr`
 - `newgrp docker` & reconnect
 
+## Copy infrastructure files
+
+Copy necessary infrastructure files, before joining this node to Swarm:
+
+- `/root/dp.pfx` - dataprotection key/certificate
+- `/data/*` - any configuration data (`secrets.env` etc) for services
+
+These files need to be copied manually and maintained consistent between all Droplets. In future we might migrate to some kind of centralized configuration/keyvault storage solution.
+
 ## Join to Swarm
 
 On the leader node:
