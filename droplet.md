@@ -159,24 +159,36 @@ Add the user to docker group:
 Copy necessary infrastructure files, before joining this node to Swarm:
 
 - `/root/dp.pfx` - dataprotection key/certificate
-- `/data/*` - any configuration data (`secrets.env` etc) for services
+- (previously) `/data/*` - any configuration data (`secrets.env` etc) for services
+  - NOW: we store secrets in Docker Swarm Secrets so they are accessible cluster-wide, refer to the guide below
 
 These files need to be copied manually and maintained consistent between all Droplets. In future we might migrate to some kind of centralized configuration/keyvault storage solution.
 
 Example of commands:
 
-- `scp sshalias:/data/projectname/{secrets,secrets-compose}.env .`
 - `scp sshalias:/root/dp.pfx .`
+- (previously) `scp sshalias:/data/projectname/{secrets,secrets-compose}.env .`
+  - NOW: we store secrets in Docker Swarm Secrets, refer to the guide below
 
 And then uploading (assuming you create the project folder first):
 
-- `scp {secrets,secrets-compose}.env sshalias:/data/projectname/
-- `scp dp.pfx sshalias:/root/
 - `rm dp.pfx {secrets,secrets-compose}.env`
+- (previously) `scp {secrets,secrets-compose}.env sshalias:/data/projectname/
+- (previously) `scp dp.pfx sshalias:/root/
 
 > Adjust the commands for the lack of root user: first copy the files somewhere where your ssh user can grab them (and give them correct permissions), then copy the files over to some allowed location, ssh to the droplet and manually move the files & set the permissions.
 
 > For now anyone can read them, figure out the correct user and set up proper permissions.
+
+## Add a secret for the new app
+
+Add the following secret with the contents of `secrets-compose.env` file:
+
+- `tyr_{env}_{appname}` - contains contents of (previous) `secrets-compose.env` file
+
+This will make it accessible for all the nodes. Our API reads this secret (configured in compose file).
+
+For more details see [tyr-data.md](tyr-data.md).
 
 ## Join to Swarm
 
