@@ -190,6 +190,10 @@ This will make it accessible for all the nodes. Our API reads this secret (confi
 
 For more details see [tyr-data.md](tyr-data.md).
 
+## Create necessary folders
+
+For dataprotection to work, we need to have a writable `/data/appname_env/dataprotection` folder existing on the host. Create this folder on every node, if authentication is necessary.
+
 ## Join to Swarm
 
 On the leader node:
