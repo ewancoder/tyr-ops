@@ -163,6 +163,21 @@ Copy necessary infrastructure files, before joining this node to Swarm:
 
 These files need to be copied manually and maintained consistent between all Droplets. In future we might migrate to some kind of centralized configuration/keyvault storage solution.
 
+Example of commands:
+
+- `scp sshalias:/data/projectname/{secrets,secrets-compose}.env .`
+- `scp sshalias:/root/dp.pfx .`
+
+And then uploading (assuming you create the project folder first):
+
+- `scp {secrets,secrets-compose}.env sshalias:/data/projectname/
+- `scp dp.pfx sshalias:/root/
+- `rm dp.pfx {secrets,secrets-compose}.env`
+
+> Adjust the commands for the lack of root user: first copy the files somewhere where your ssh user can grab them (and give them correct permissions), then copy the files over to some allowed location, ssh to the droplet and manually move the files & set the permissions.
+
+> For now anyone can read them, figure out the correct user and set up proper permissions.
+
 ## Join to Swarm
 
 On the leader node:
