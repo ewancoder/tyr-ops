@@ -192,7 +192,7 @@ For more details see [tyr-data.md](tyr-data.md).
 
 ## Create necessary folders
 
-For dataprotection to work, we need to have a writable `/data/appname_env/dataprotection` folder existing on the host. Create this folder on every node, if authentication is necessary.
+Some folders may need to be created & adjusted permissions. For example, for dataprotection to work, the API container need to be able to write data protection keys to `/data/appname_env/dataprotection`. This is pretty much work in progress yet. I need to figure out how to proprely manage the folder structure for all projects to support scalability to future nodes.
 
 ## Join to Swarm
 
