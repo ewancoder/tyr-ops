@@ -13,21 +13,13 @@ This document describes the thought process and decisions made when spinning up 
 
 Every environment should be completely isolated from each other. Even though sometimes we might think that it would be beneficial having a shared Redis instance across all environments, or sharing a configuration variable - we cannot afford accidentally writing data from a development environment container to production database. This is why we take steps to ensure that every environment are using their own containers/configs/secrets, even if they have the same (duplicated) values.
 
-## Shared redis server
-
-- `tyr-infra-cache`
-
-Sometimes we need all our services to share data. Configuration and secrets can be safely distributed using Docker Swarm Config/Secret resources, but dynamic data cannot be easily shared.
-
-For dynamic data (for example, data protection keyring) we deploy a shared `valkey` (redis) instance with persistence enabled.
-
 ## Caddy reverse proxy
 
 - `tyr-infra-caddy`
 
 We use Caddy reverse proxy for reverse proxying & load balancing (see [caddy.md](caddy.md)).
 
-Previously it was deployed using regular docker compose, since we are moving everything to Swarm a decision has been made to move the Caddy as well.
+Caddy is a special service because it needs to both support Swarm services and non-swarm services, so we start it as a regular non-swarm service separately from the `tyr-infra` stack.
 
 The important information:
 
@@ -65,3 +57,16 @@ Redis Insight does not have any authentication features, so we need to protect i
 PostgreSQL admin client - web version. This is a great app including MFA capabilities.
 
 - It should be connected to `tyr-administration-internal` - any services that need manual administration will be connected to it.
+
+## Shared redis server
+
+- `tyr-infra-prod-cache`
+- `tyr-infra-dev-cache`
+
+The folder with the data is respectively: `/data/tyr-infra/{prod,dev}-cache/data`. Development cache instance is running on the dev/pc machine.
+
+Sometimes we need all our services to share data. Configuration and secrets can be safely distributed using Docker Swarm Config/Secret resources, but dynamic data cannot be easily shared.
+
+For dynamic data (for example, data protection keyring) we deploy a shared `valkey` (redis) instance with persistence enabled.
+
+> These caches - as any other cross-service resources (and not tools) should always be environment specific. Maybe it's even a better idea to split these caches to separate docker compose yamls in future. We just don't have many resources like this yet, just the cache, so for convenience we put it in the same Compose file and duplicate for 2 envs.
