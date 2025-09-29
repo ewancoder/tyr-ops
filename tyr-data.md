@@ -32,6 +32,9 @@ Secrets are encrypted and only containers that mount them can read them. Do not 
 
 - `tyr_{env}_{app}` - contains environment file with all necessary secrets for APIs to run, shared between APIs if we have multiple APIs
 - `tyr_{env}_postgres_password` - postgres needs this in order to deploy the first time, so we have it as a separate secret to allow it to do just that
+- `tyr_{env}_dp` - dataprotection pfx certificate for given environment
+
+> See [dataprotection.md](dataprotection.md) on more info for TyR dataprotection setup.
 
 > When creating a new service - copy existing `secrets-compose.env` file to a new folder and create a Swarm secret form it. When any secrets change - update the Swarm secret.
 

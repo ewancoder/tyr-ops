@@ -158,3 +158,22 @@ import prod_api_swarm aircaptain prod-aircaptain_api
 ```
 
 So that on the url `https://www.api.partofurl.typingrealm.com` you will reach `myservicename` service (but also on any similar urls, with/without `www` and with `.com` or `.org`).
+
+## Security
+
+Sometimes we want to protect endpoints that otherwise do not have authentication, like **RedisInsight** server that allows connecting to our Redis instances.
+
+Caddy provides a way for basic authentication.
+
+1. Create a password hash: `caddy hash-password --plaintext 'my-password'`
+2. Insert the following section in your endpoint declaration:
+
+```
+... {
+    basicauth {
+        username password_hash
+    }
+
+    reverse_proxy ...
+}
+```
