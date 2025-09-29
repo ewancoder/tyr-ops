@@ -194,6 +194,10 @@ For more details see [tyr-data.md](tyr-data.md).
 
 Some folders may need to be created & adjusted permissions. For example, for dataprotection to work, the API container need to be able to write data protection keys to `/data/appname_env/dataprotection`. This is pretty much work in progress yet. I need to figure out how to proprely manage the folder structure for all projects to support scalability to future nodes.
 
+## Install utilities
+
+- `yq` - needs to be installed for my scripts automatically using latest version of the Docker Secrets.
+
 ## Join to Swarm
 
 On the leader node:
