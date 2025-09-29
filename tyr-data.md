@@ -54,6 +54,12 @@ So updating the secret is a major PITA in a Swarm cluster.
 - `docker secret rm secretname && docker secret create secretname contentfile`
 - Redeploy necessary stacks / pipelines
 
+Unfortunately this is a major PITA and leads to a **DOWNTIME**. So the only other solution is:
+
+1. Create a new secret with name `secret-1`, `secret-2`, etc (versioning)
+2. Update yaml file to use the updated secret (maybe using .env variables)
+3. Redeploy the stack with the new secret
+
 ## Docker swarm configs
 
 Swarm configs are non-sensitive files that are accessible cluster-wide, similarly to the secrets.
