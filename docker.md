@@ -121,3 +121,23 @@ WantedBy=default.target
 - `systemctl --user start docker.service`
 - `docker info` - should show **Rootless: true**
 - `reboot`
+
+## Networking
+
+### Setting up aliases for a specific service
+
+Let's assume you deploy a stack with a service `my-seq` from folder `my-stack-name`, so now you have a service `my-stack-name_my-seq`. But you want other services to talk to it by the `seq` name. This can be achieved with the use of aliases within a network.
+
+When configuring networks, set them up like this:
+
+```
+networks:
+  some_other_network: {}
+  my_network:
+    aliases:
+      - seq
+```
+
+Now your service will be accessible by the domain name `seq` within the `my_network` network.
+
+> If some other service is using this alias - stack will not deploy.

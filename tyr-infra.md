@@ -38,6 +38,10 @@ We use Seq to gather logs from all our services.
 - It should be deployed to `dev`/`IvanPC` machine because it requires a lot of resources.
 - It should be connected to `tyr-infrastructure-internal` network. Any services that require logs to be sent to Seq will need to be connected to it as well.
 
+> To make sure that seq is reachable by all the services who were previously sending data to `seq` or `tyr-infra-seq` domain (notice dash, not an underscore) - we need to set up alias for this service that will be available on a specific network (`tyr-infrastructure-internal`).
+
+To set this up, see (docker.md)[docker.md].
+
 ## RedisInsight
 
 - `tyr-infra-redisinsight`
