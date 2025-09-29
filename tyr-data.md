@@ -60,6 +60,12 @@ Unfortunately this is a major PITA and leads to a **DOWNTIME**. So the only othe
 2. Update yaml file to use the updated secret (maybe using .env variables)
 3. Redeploy the stack with the new secret
 
+#### Current secret management
+
+We are iterating over all the secrets that are defined in the compose file as part of deployment process. We check the secret in Docker Secrets for every secret - and get the latest version (numerically ordered). And we substitute this secret version into the compose file before deployment.
+
+This way we make sure we always use the latest secret version.
+
 ## Docker swarm configs
 
 Swarm configs are non-sensitive files that are accessible cluster-wide, similarly to the secrets.
