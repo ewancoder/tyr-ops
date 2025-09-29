@@ -140,7 +140,25 @@ networks:
 
 Now your service will be accessible by the domain name `seq` within the `my_network` network.
 
-> If some other service is using this alias - stack will not deploy.
+> If some other service is using this alias - dns resolution is uncertain / not guaranteed.
+
+### Setting up links
+
+We can also set up links between services:
+
+```
+web:
+  links:
+    - "db:database"
+  ...
+
+db:
+  ...
+```
+
+Service `web` can access service `db` by the name `db` (default) and EXTRA by the name `database`.
+
+> Links is a legacy feature though, same can be achieved by giving a service a name on the network, using Aliases (see above). Links will not work without both containers being on the same network, they just adjust `hosts` file within one container.
 
 ### Network-qualified names
 
