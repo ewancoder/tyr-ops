@@ -141,3 +141,15 @@ networks:
 Now your service will be accessible by the domain name `seq` within the `my_network` network.
 
 > If some other service is using this alias - stack will not deploy.
+
+### Network-qualified names
+
+> UNTESTED, WIP
+
+It looks like Docker allows accessing services with network-qualified names:
+
+- `ping my_container_name.my_network_name`
+
+If this is the case - we can create a completely separate network for each environment, while keeping service names the same inside the network. This will allow to have super-convenient setup, both in Caddy (templating) and everywhere else in our infrastructure.
+
+However, for added safety it might make sense to still use prefixed names (`dev-myservice, prod-myservice`) even if we introduce per-environment networks.
