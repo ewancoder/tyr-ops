@@ -12,6 +12,8 @@ The differences between the two:
 
 > Currently I'm planning to switch over from having environment files to having Docker Swarm secrets, for the Swarm configuration.
 
+> We still need `secrets.env` file for secrets on `domain`: one in `app_dev`, one in `app_prod` folder, unfortunately, for dbmate deployment. Later when we move to packaging the migrations & running them as part of Swarm deployment - we can get rid of it completely.
+
 ## Secrets hints
 
 - Password for DP (dataprotection) PFX certificate is a simple one, but with reg numbers.
