@@ -208,6 +208,6 @@ Then use whatever is printed on the new droplet (follower node), just add `--adv
 
 Update label to add it as a worker to my network:
 
-`docker node update --label-add worker=true NODE_NAME`
+`docker node update --label-add prod-worker=true NODE_NAME`
 
 > At this point, Swarm will already deploy worker services to this node when possible.

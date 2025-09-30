@@ -34,11 +34,11 @@ Since nodes are not tags, we cannot set multiple values for the same key. So we 
 ### My nodes
 
 - **do-main** - Digital Ocean main (manager) node
-  - Label: infra=true
-  - Label: worker=true
+  - Label: prod-infra=true
+  - Label: prod-worker=true
   - Label: id=domain - this is used when we need to deploy something 100% to a SINGLE main node
 - **do-worker** - Digital Ocean worker node
-  - Label: worker=true
+  - Label: prod-worker=true
 - **ivanpc** - My current PC
   - Label: dev-infra=true
   - Label: dev-worker=true
@@ -46,14 +46,14 @@ Since nodes are not tags, we cannot set multiple values for the same key. So we 
 When deploying services:
 
 - Infrastructure should be only deployed to `infra=true` nodes. If we have more than one infra node - we need to set up replication (for databases / cache / etc). Currently only the manager node has infra on it.
-- Stateless services should only be deployed to `worker=true` nodes. This way we distribute the load between multiple droplets.
-- Development environment is deployed ONLY to `dev-infra/worker=true` nodes following the same rules.
+- Stateless services should only be deployed to `prod-worker=true` nodes. This way we distribute the load between multiple droplets.
+- Development environment is deployed ONLY to `dev-infra/dev-worker=true` nodes following the same rules.
 
 Scenario usages:
 
-- We want to set up infrastructure clustering: we add more droplets with `infra=true` and set up infrastructure on all the nodes.
-- We want to spread the load / increase total RAM capacity. We add more `worker=true` nodes and rebalance the Swarm.
-- We want to have development environment(s) running across multiple PCs. We add more PCs as dev-infra/worker nodes.
+- We want to set up infrastructure clustering: we add more droplets with `prod-infra=true` and set up infrastructure on all the nodes.
+- We want to spread the load / increase total RAM capacity. We add more `prod-worker=true` nodes and rebalance the Swarm.
+- We want to have development environment(s) running across multiple PCs. We add more PCs as dev-infra/dev-worker nodes.
 
 ### Nodes data
 
@@ -66,7 +66,7 @@ The following should always be present on every node:
   - DataProtection folder for per-service keys (empty, for volume)
   - secrets.env / secrets-compose.env files with per-service secrets
 
-For example, **any** node that has `infra` or `worker` label, should have folders for **all** non-development environments. **Any** node that has `dev-infra` or `dev-worker` label, should have folders for **all** development environments.
+For example, **any** node that has `prod-infra` or `prod-worker` label, should have folders for **all** non-development environments. **Any** node that has `dev-infra` or `dev-worker` label, should have folders for **all** development environments.
 
 At this time, we only have one of each: `prod` (production) and `dev` (development).
 
