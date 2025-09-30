@@ -124,6 +124,11 @@ WantedBy=default.target
 
 ## Networking
 
+### Creating an overlay network
+
+- `docker network create --driver overlay --attachable --internal networkname`
+  - you can also specify `--opt encrypted`, however it adds additional overhead/setup needed, and since we are running our Swarm cluster on already encrypted WireGuard mesh - we don't need it
+
 ### Setting up aliases for a specific service
 
 Let's assume you deploy a stack with a service `my-seq` from folder `my-stack-name`, so now you have a service `my-stack-name_my-seq`. But you want other services to talk to it by the `seq` name. This can be achieved with the use of aliases within a network.
