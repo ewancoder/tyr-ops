@@ -91,6 +91,8 @@ Secrets are stored in their respective folder in plain text, for versioning:
 - `/data/tyr/prod/appname/secrets/secrets` - service-specific secrets, etc.
 - `/data/tyr/prod/appname/secrets/something-specific` - something-specific secret of appname app
 
+> We still need to have `/data/tyr/prod/appname/secrets.env` file containing a single secret - `DATABASE_URL=xxx`, for `dbmate` migrations to work.
+
 ## Data structure
 
 For TyR application, both docker files and services depend on `secrets.env` or `secrets-compose.env` files in the respective `/data/env-project` folders.
