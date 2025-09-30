@@ -12,6 +12,9 @@ Since we are using the same Docker Swarm cluster for multiple environments, we n
   - Example: `/data/tyr/prod/aircaptain`
   - This folder contains any data related to the application stack: postgres, valkey, etc
     - Example: `/data/tyr/prod/aircaptain/postgres` - postgres database volume
+- Secrets folders:
+  - Global: `$DATA_FOLDER/$SCOPE/$ENV/secrets`
+  - App-specific: `$DATA_FOLDER/$SCOPE/$ENV/$APP/secrets`
 - Service name: `$SCOPE-$ENV-$APP_$Service`
   - Example: `tyr-prod-aircaptain_api`, `tyr-prod-aircaptain_postgres`
   - Unfortunately we need to live with `_$Service` instead of a dash - hardcoded Swarm behavior
@@ -21,12 +24,14 @@ Since we are using the same Docker Swarm cluster for multiple environments, we n
   - `$SCOPE-net-$NetworkName`: `tyr-net-proxy` (undesirable)
   - `$SCOPE-$ENV-net-$NetworkName`: `tyr-net-infra`
   - `$SCOPE-$ENV-net-$NetworkName`: tyr-prod-net-infra`
-  - `$SCOPE-$ENV-net-$APP-$NetworkName`: tyr-prod-net-aircaptain-local`
+  - `$SCOPE-$ENV-$APP-net-$NetworkName`: tyr-prod-aircaptain-net-local`
 - Secret name
   - `$SCOPE-$ENV-sec-$SecretName`: `tyr-prod-sec-dp`
-  - `$SCOPE-$ENV-sec-$APP-$SecretName`: `tyr-prod-sec-aircaptain-secrets`
+  - `$SCOPE-$ENV-$APP-sec-$SecretName`: `tyr-prod-aircaptain-sec-secrets`
 
 > By default, networks will be internal. So instead of postfixing them all with `internal`, we'll postfix the public ones with `public`.
+
+> $APP comes always before `sec/net` (resource type), because resources are "nested" in the app hierarchy.
 
 Special networks:
 
@@ -40,6 +45,28 @@ Special networks:
   - `tyr-prod-net-proxy`
   - `tyr-dev-net-proxy`
 - `typingrealm` - old network for connecting non-swarm containers to the proxy, will be removed in future
+
+Infrastructure (e.g. shared cache) naming convention:
+
+- `$SCOPE-$ENV-infra-$APP` - e.g. `tyr-prod-infra_cache` for shared cache
+
+> Currently we have a single deployment compose file for all environments, so the service name becomes `tyr-infra_prod-cache`. We achieve desired `tyr-prod-infra_cache` by using **Aliases** feature, including this alias to the infrastructure (and administration) networks.
+
+> Seq name is just "seq" (achieved via aliases) because it's being used for ANY logs from ANY apps and ANY scopes. Possibly it's not a bad idea to have multiple Seq instances, but we are not going to implement it for the same reason we are not going to have a separate Swarm cluster for each environment: convenience and small scope.
+
+> Seq also has multiple aliases, some of which are: `tyr-infra_seq`, `tyr-prod-infra_seq`, `tyr-dev-infra_seq`, so we can use a respective environment-specific seq alias and not worry if we decide to split the setup in future.
+
+### Seq logging
+
+Seq logging sets up the following data fields in its API Key application properties:
+
+- `Application=CamelCaseBusinessAppName` (AirCaptain, FoulBot)
+- `App = the same ^`
+- `Service=tyr-prod-aircaptain_api` (full docker stack name)
+- `Environment=Production/Development/etc`
+- `Env = the same ^`
+
+The name of the API key itself is a docker service name because it uniquely identifies separate API keys.
 
 ## Secrets
 
@@ -55,7 +82,14 @@ Read more about Docker Swarm Secrets in [docker.md](docker.md).
 
 the content of previous `secrets.env`/`secrets-compose.env` file in the secret:
 
-- `$SCOPE
+- `$SCOPE-$ENV-sec-$APP-secrets` - service specific secrets
+- `$SCOPE-$ENV-sec-secrets` - global secrets (shared across environment)
+
+Secrets are stored in their respective folder in plain text, for versioning:
+
+- `/data/tyr/prod/secrets/secrets` - global secrets
+- `/data/tyr/prod/appname/secrets/secrets` - service-specific secrets, etc.
+- `/data/tyr/prod/appname/secrets/something-specific` - something-specific secret of appname app
 
 ## Data structure
 
@@ -151,7 +185,7 @@ echo tyr-prod-net-administration tyr-prod-net-infrastructure tyr-prod-net-proxy 
 
 - Defined local network (alias `local`): `$SCOPE-$ENV-net-$APP` - `tyr-prod-net-aircaptain`
   - This network is used for backend services to communicate with eath other and with the infrastructure. For example, .NET API, Go Backend, Postgres, and Redis, all should be on the same network
-- Defined local network (alias `deploy'): `$SCOPE-$ENV-net-$APP-deploy`
+- Defined local network (alias `deploy`): `$SCOPE-$ENV-net-$APP-deploy`
   - used for deployment operations - like applying DB migrations: so `postgres` service can be on this network, and we connect to it directly from the deployment script (or another ephemeral service)
   - It should be attachable, so that we can connect to it during deployment (unless ephemeral service is used)
 - `proxy`, `infra`, `admin` networks - our special cluster-wide (environment-wide) networks
@@ -163,3 +197,27 @@ echo tyr-prod-net-administration tyr-prod-net-infrastructure tyr-prod-net-proxy 
 - `tyr-${ENV}-sec-postgres-password` - default postgres password
 - `tyr-${ENV}-sec-aircaptain-secrets` - aircaptain application secrets env file
 - `tyr-${ENV}-sec-dp` - data protection certificate
+
+#### API service secrets.env content
+
+Previously all the secrets were stored together in the `secrets.env` file. Now we store them in docker secrets.
+
+These are the secrets for the TyR infrastructure, that should be separate for each service:
+
+Stored in: `tyr-$ENV-sec-$APP-secrets` secret.
+
+- `SeqApiKey` - API key for this specific App for Seq ingestion
+- `DbConnectionString` - Connection string to the database
+- `DATABASE_URL` - Connection string to the database, in the format for Database Migrations (dbmate)
+  - This secret can be moved away after we migrate to ephemeral services, and it's only needed in the env file, not in the Docker secret
+- `POSTGRES_PASSWORD` - This secret was used before for specifying the default Postgres password
+  - Now we are specifying it using a separate cluster-wide secret, so we can remove it from the secrets.env
+- `CacheConnectionString` - Service-specific cache connection string for anything that needs distributed cache
+
+These are the secrets that are still there, but can be moved out to "global" env secrets:
+
+Stored in: `tyr-$ENV-sec-secrets` secret.
+
+- `SeqUri` - URL for Seq logs ingestion
+- `DpCertPassword` - Password for data protection certificate
+- `GlobalCacheConnectionString` - Connection string to the Global cache (shared between services of one env, for things like data protection)
