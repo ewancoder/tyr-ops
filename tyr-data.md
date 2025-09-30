@@ -56,6 +56,10 @@ Infrastructure (e.g. shared cache) naming convention:
 
 > Seq also has multiple aliases, some of which are: `tyr-infra_seq`, `tyr-prod-infra_seq`, `tyr-dev-infra_seq`, so we can use a respective environment-specific seq alias and not worry if we decide to split the setup in future.
 
+> Infrastructure environment-agnostic data is stored at `/data/tyr/infra`, environment-specific at `/data/tyr/$ENV/infra`.
+
+> There are environment-specific networks: `tyr-net-proxy` for example, for the use by environment-agnostic services like pgadmin to be connected to proxy.
+
 ### Seq logging
 
 Seq logging sets up the following data fields in its API Key application properties:
