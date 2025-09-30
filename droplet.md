@@ -16,7 +16,7 @@ export TERM=xterm-256color
 
 We don't want root login to be possible even via SSH.
 
-- `adduser tyr` (use simple password, and skip the name)
+- `adduser tyr --uid 2000 --gid 2000` (use simple password, and skip the name, don't forget to specify 2000 id)
 - `usermod -aG sudo tyr` - add the user to sudo group
 
 Edit `/etc/ssh/sshd_config`:
