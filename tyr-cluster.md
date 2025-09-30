@@ -21,27 +21,32 @@ Since we are using the same Docker Swarm cluster for multiple environments, we n
   - Unfortunately we cannot prefix the service resource with `-svc-` because the only way to do this is to rename the services themselves in the compose file (e.g. from `api` to `svc-api`) and I don't want to do this
 - Network name
   - All networks should preferably be environment-level (isolated environments) so we can make sure `dev` cannot talk to `prod`
-  - `$SCOPE-net-$NetworkName`: `tyr-net-proxy` (undesirable)
-  - `$SCOPE-$ENV-net-$NetworkName`: `tyr-net-infra`
-  - `$SCOPE-$ENV-net-$NetworkName`: tyr-prod-net-infra`
-  - `$SCOPE-$ENV-$APP-net-$NetworkName`: tyr-prod-aircaptain-net-local`
+  - `$SCOPE-net-$NetworkName`: `tyr-net-proxy` (undesirable, but ok for apps like pgadmin that just need proxy connection)
+  - `$SCOPE-$ENV-net-$NetworkName`: `tyr-prod-net-infra`, `tyr-dev-net-infra`
+  - `$SCOPE-$ENV-$APP-net-$NetworkName`: `tyr-prod-aircaptain-net-local`
 - Secret name
   - `$SCOPE-$ENV-sec-$SecretName`: `tyr-prod-sec-dp`
-  - `$SCOPE-$ENV-$APP-sec-$SecretName`: `tyr-prod-aircaptain-sec-secrets`
+  - `$SCOPE-$ENV-$APP-sec-$SecretName`: `tyr-prod-aircaptain-sec-env`
 
 > By default, networks will be internal. So instead of postfixing them all with `internal`, we'll postfix the public ones with `public`.
 
 > $APP comes always before `sec/net` (resource type), because resources are "nested" in the app hierarchy.
 
+Main secrets for the API containing environment variables:
+
+- `$SCOPE-$ENV-sec-env` - global environment variables shared between the services
+- `$SCOPE-$ENV-$APP-sec-env` - service(stack)-specific environment variables
+
 Special networks:
 
-- `tyr-administration-internal` - for connecting services to administration apps (pgadmin, redisinsight). Will be migrated in future into:
+- Administration - for connecting services to administration apps (pgadmin, redisinsight)
   - `tyr-prod-net-administration`
   - `tyr-dev-net-administration`
-- `tyr-infrastructure-internal` - for connecting services to logging systems & etc. In future:
+- Infrastructure - for connecting services to logging systems & etc
   - `tyr-prod-net-infrastructure`
   - `tyr-prod-net-infrastructure`
-- `tyr-proxy-internal` - used to connect services to reverse proxy. In future:
+- Proxy - used to connect services to reverse proxy
+  - `tyr-net-proxy` - for environment-agnostic apps like `pgadmin` that require proxy connection
   - `tyr-prod-net-proxy`
   - `tyr-dev-net-proxy`
 - `typingrealm` - old network for connecting non-swarm containers to the proxy, will be removed in future
@@ -52,13 +57,17 @@ Infrastructure (e.g. shared cache) naming convention:
 
 > Currently we have a single deployment compose file for all environments, so the service name becomes `tyr-infra_prod-cache`. We achieve desired `tyr-prod-infra_cache` by using **Aliases** feature, including this alias to the infrastructure (and administration) networks.
 
-> Seq name is just "seq" (achieved via aliases) because it's being used for ANY logs from ANY apps and ANY scopes. Possibly it's not a bad idea to have multiple Seq instances, but we are not going to implement it for the same reason we are not going to have a separate Swarm cluster for each environment: convenience and small scope.
+Seq aliases:
+  - `seq` - on `tyr-net-proxy` network, for Caddyfile
+  - `tyr-prod-infra_seq` - on `tyr-prod-net-infrastructure`
+  - `tyr-dev-infra_seq` - on `tyr-dev-net-infrastructure`
 
-> Seq also has multiple aliases, some of which are: `tyr-infra_seq`, `tyr-prod-infra_seq`, `tyr-dev-infra_seq`, so we can use a respective environment-specific seq alias and not worry if we decide to split the setup in future.
+Infrastructure environment-agnostic data is stored at `/data/tyr/infra`, environment-specific at `/data/tyr/$ENV/infra`:
 
-> Infrastructure environment-agnostic data is stored at `/data/tyr/infra`, environment-specific at `/data/tyr/$ENV/infra`.
-
-> There are environment-specific networks: `tyr-net-proxy` for example, for the use by environment-agnostic services like pgadmin to be connected to proxy.
+- Seq data - environment agnostic
+- PgAdmin data - environment agnostic
+- RedisInsight data - environment agnostic
+- Shared Cache (redis/valkey) - environment **specific**
 
 ### Seq logging
 
@@ -84,40 +93,38 @@ Secrets are also better because environment variables can be easily read by usin
 
 Read more about Docker Swarm Secrets in [docker.md](docker.md).
 
-the content of previous `secrets.env`/`secrets-compose.env` file in the secret:
+We store content of previous `secrets.env`/`secrets-compose.env` file in the secrets:
 
-- `$SCOPE-$ENV-sec-$APP-secrets` - service specific secrets
-- `$SCOPE-$ENV-sec-secrets` - global secrets (shared across environment)
+- `$SCOPE-$ENV-sec-$APP-env` - service specific secrets
+- `$SCOPE-$ENV-sec-env` - global secrets (shared across environment)
 
 Secrets are stored in their respective folder in plain text, for versioning:
 
-- `/data/tyr/prod/secrets/secrets` - global secrets
-- `/data/tyr/prod/appname/secrets/secrets` - service-specific secrets, etc.
+- `/data/tyr/prod/secrets/env` - global secrets
+- `/data/tyr/prod/appname/secrets/env` - service-specific secrets, etc.
 - `/data/tyr/prod/appname/secrets/something-specific` - something-specific secret of appname app
 
-> We still need to have `/data/tyr/prod/appname/secrets.env` file containing a single secret - `DATABASE_URL=xxx`, for `dbmate` migrations to work.
+> We still need to have `/data/tyr/prod/appname/secrets.env` file containing a single secret - `DATABASE_URL=xxx`, for `dbmate` migrations to work. This will be reworked in the future.
 
-## Data structure
+### Previous secrets.env files data
 
-For TyR application, both docker files and services depend on `secrets.env` or `secrets-compose.env` files in the respective `/data/env-project` folders.
+> This is a legacy section about quirks of storing data in `secrets.env`/`secrets-compose.env`.
 
-For regular docker compose deployments, we SSH directly to the machine where it should be deployed and deploy using `secrets.env` file. For Swarm deployments, we use `secrets-compose.env` file.
+For regular docker compose deployments, we SSH-ed directly to the machine where it should be deployed and deploy using `secrets.env` file. For Swarm deployments, we used `secrets-compose.env` file.
 
-The differences between the two:
+The differences between the two were:
 
-- Seq uri: `http://seq:5341` in compose, `http://tyr-infra-seq:5341` in direct. Not sure why, need to investigate / recall.
+- Seq uri: `http://seq:5341` in compose, `http://tyr-infra-seq:5341` in direct.
 - `DbConnectionString/DATABASE_URL`: `appname_postgres` host in Swarm, `appname-postgres` host in regular Docker. Because we specify `-` manually there, but Swarm automatically uses `_`.
 - `CacheConnectionString`: same, `-` delimiter for regular docker, `_` for Swarm.
 
-> Currently I'm planning to switch over from having environment files to having Docker Swarm secrets, for the Swarm configuration.
+### Secrets hints
 
-> We still need `secrets.env` file for secrets on `domain`: one in `app_dev`, one in `app_prod` folder, unfortunately, for dbmate deployment. Later when we move to packaging the migrations & running them as part of Swarm deployment - we can get rid of it completely.
-
-## Secrets hints
+> This is just to remind specific things for myself.
 
 - Password for DP (dataprotection) PFX certificate is a simple one, but with reg numbers.
 
-## Docker Swarm secrets
+### Docker Swarm secrets
 
 Swarm secrets are better than env files because they are accessible cluster-wide and we do not need to copy them to every node.
 
@@ -127,21 +134,19 @@ My current approach - saving the current `secrets-compose.env` file as a single 
 
 We still need to create at least one more separate secret for postgres database creation though.
 
-### Secret names
+#### Secret names
 
 Secrets are encrypted and only containers that mount them can read them. Do not store them in a Config because then anyone can inspect them (via docker inspect for example). We could afford storing them in files previously because we could restrict file permissions, but we can't restrict Docker Config.
 
-- `tyr_{env}_{app}` - contains environment file with all necessary secrets for APIs to run, shared between APIs if we have multiple APIs
-- `tyr_{env}_postgres_password` - postgres needs this in order to deploy the first time, so we have it as a separate secret to allow it to do just that
-- `tyr_{env}_dp` - dataprotection pfx certificate for given environment
+- `tyr-$ENV-$APP-sec-env` - contains environment file with all necessary secrets for APIs to run, shared between APIs if we have multiple APIs
+- `tyr-$ENV-postgres-password` - postgres needs this in order to deploy the first time, so we have it as a separate secret to allow it to do just that
+- `tyr-$ENV-dp` - dataprotection pfx certificate for given environment
 
 > See [dataprotection.md](dataprotection.md) on more info for TyR dataprotection setup.
 
-> When creating a new service - copy existing `secrets-compose.env` file to a new folder and create a Swarm secret form it. When any secrets change - update the Swarm secret.
+> We need to read these secrets directly from `/run/secret/secretname` from .NET app, because we are using distroless/chiseled images and we cannot use bash/shell to transform them into environment variables.
 
-> We need to implement the code for reading these secrets directly in our .NET apps, because we use chiseled/distroless images and we do not have access to any kind of shell.
-
-### Updating the secret
+#### Updating the secret
 
 Secrets in Docker Swarm are immutable, so you cannot update it.
 
@@ -161,11 +166,13 @@ Unfortunately this is a major PITA and leads to a **DOWNTIME**. So the only othe
 2. Update yaml file to use the updated secret (maybe using .env variables)
 3. Redeploy the stack with the new secret
 
-#### Current secret management
+##### Current secret management
 
 We are iterating over all the secrets that are defined in the compose file as part of deployment process. We check the secret in Docker Secrets for every secret - and get the latest version (numerically ordered). And we substitute this secret version into the compose file before deployment.
 
 This way we make sure we always use the latest secret version.
+
+This is done automatically by the deployment script.
 
 ## Docker swarm configs
 
