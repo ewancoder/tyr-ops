@@ -33,6 +33,8 @@ Since nodes are not tags, we cannot set multiple values for the same key. So we 
 
 ### My nodes
 
+> IMPORTANT NOTE: this documentation will be updated later. We are moving to consistent naming scheme, so it's now `tyr-prod-infra` and `tyr-dev-worker` labels (including the `tyr` scope).
+
 - **do-main** - Digital Ocean main (manager) node
   - Label: prod-infra=true
   - Label: prod-worker=true
