@@ -41,3 +41,19 @@ Additional features:
 2. Setup local PC `~/.ssh/config` for connecting to the droplet: `Host do-main-lon, do-worker-lon-1, do-worker-nyc-2`.
 3. SSH to the server initially using `22` port, edit `/etc/ssh/sshd_config` to change the Port, `systemctl restart sshd`, test that new port works
 
+## Setting up floating IP
+
+By default, any IPs will be released (reused by other people) if you DESTROY a droplet. Until you destroy it, the IP will always be the same. However, sometimes we want to have this IP fixed as a Digital Ocean resource, so that we can remove one droplet, create another, and assign the same IP to it.
+
+This is when we need floating IPs.
+
+> Unfortunately we didn't do this from the beginning, so current migration period will introduce some downtime.
+
+1. Go to `Networking` tab
+2. Click `Add a Reserved IP`
+3. Choose the type:
+  - Assign to Droplet - will assign it instantly to some droplet
+  - Reserve in Datacenter Region - will reserve it, and you can assign to any droplets later
+
+> When IP is reserved, but is not assigned to the droplet - it is changed for $5 a month. So it's better to use `Assign to Droplet` option, and later we can move it over to another droplet.
+
