@@ -13,15 +13,17 @@ This is a hosting service where I'm renting virtual machines (called Droplets).
   - $6 - cheapest, 25Gb storage, 1Gb ram
   - $8 - 35Gb nvme, 1Gb ram (currently used workers/other regions)
   - $12 - 50Gb storage, 2Gb ram
-  - $14 - 50Gb nvme, 2Gb ram (currently used for prod)
+  - $14 - 50Gb nvme, 2Gb ram (previously used for prod infra leader)
     - Consider using the same for second region main node when going multi-region
-  - $16 - 70Gb nvme, 2Gb ram
+  - $16 - 70Gb nvme, 2Gb ram (currently used for prod infra leader)
 
 Additional features:
 
 - Additional volume - 10$/100Gb
-- Weekly backups - 1.6$
-- Daily backups - 2.4$
+- Weekly backups - 20% cost of droplet - currently used for prod infra leader
+- Daily backups - 30% cost of droplet
+
+> Set leader backups: Sunday, 12am-4am utc
 
 > We don't need backups on worker/side nodes, as all the data is stored on the main node only.
 
@@ -30,8 +32,12 @@ Additional features:
 6. Add improved metrics monitoring and alerting - it's free, so let's test this
 7. Do **not** enable ipv6 for now, let's do it manually later if needed.
 8. Also no need for initialization scripts.
+  
+> In future, we might want to add initialization scripts, when we finish writing them & start maintaining them.
+
 9. Hostname - `do-worker-region-ID`, for the first worker for example `do-worker-lon-1` etc.
   - Probably a good idea to also change hostname of main node, to `do-main-lon`.
+  - Main leader node now has: `do-main-lon`.
 10. No need for tags (for now).
 11. Project - `TypingRealm`.
 
