@@ -20,3 +20,24 @@
 ## run0
 
 `run0` - more secure alternative to `sudo`, introduced in `systemd`
+
+## scp
+
+By default, scp does not preserve ownership.
+
+- `-r` - recursive, including subdirectories
+- `-p` - preserve ownership
+
+Alternatively, archive the folder and scp it, then unarchive as needed:
+
+- `tar -czpf /tmp/archive.tar.gz -C /data/app postgres`
+  - `-c` - create archive
+  - `-z` - compress with gzip
+  - `-p` - preserve permissions
+  - `f` - output file
+  - `-C` - change to folder, so that inside archive path is `postgresql/`
+
+Then:
+
+- `tar -xzpf /tmp/archive.tar.gz -C /data/app`
+  - `x` - extract
