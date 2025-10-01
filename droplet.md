@@ -24,6 +24,8 @@ We don't want root login to be possible even via SSH.
 
 Update `/home/tyr/.ssh/authorized_keys` - add our publickey there, and remove it from the root folder:
 
+> If setting up a **LEADER** node - also add `github2domain` public key to `authorized_keys`, so that github can SSH to it.
+
 ```
 sudo mv /root/.ssh/authorized_keys > /home/tyr/.ssh/authorized_keys
 chown tyr:tyr /home/tyr/.ssh/authorized_keys
