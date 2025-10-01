@@ -256,3 +256,7 @@ To re-join the new swarm:
 ## Reboot
 
 Reboot after whole setup, just to make sure everything is properly restarted.
+
+## If setting up a leader node
+
+Check out the rest at [leader-node.md](leader-node.md).
