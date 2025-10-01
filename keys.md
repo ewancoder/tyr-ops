@@ -26,6 +26,8 @@
   - (workname) - connection to work repositories
     - RSA `-t RSA` unfortunately - Azure doesn't support ED
     - Comment: "workusername@ivanlaptop-workname"
+- Work VDI
+  - SSH doesn't work there unfortunately, using HTTPS authentication
 - PATs - personal access tokens / access tokens for different systems
   - Work - (security)/work
     - deployment-monitor-pat
@@ -78,6 +80,7 @@ Usage scenarios:
 2. You sign some data with your private key, and people can verify it with your public key.
 
 My locations:
+
 - (security)/gnupg - symlinked to home/.gnupg
 - (security)/backup - backup of master keys (exported for future import)
 
@@ -139,6 +142,7 @@ In order to not see "unknown/untrusted" messages in git log, do the following:
 For securely connecting to a shell, or forwarding ports (tunneling).
 
 My locations:
+
 - (security)/ssh - symlinked to home/.ssh
 
 Use simple password for SSH keys (just so that there IS password).
