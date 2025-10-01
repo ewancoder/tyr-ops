@@ -7,6 +7,7 @@ Current domains are configured as raw A/AAAA records, without any CloudFlare fea
 
 Current domain names:
 
-- *typingrealm.com - $MAIN_IP
+- *typingrealm.com - $MAIN_IP, separate domain registar - `domain.com`
+- *typingrealm.org - $MAIN_IP - `cloudflare.com` registar
 - ssh.typingrealm.org - $MAIN_IP, not a separate record - I'm just using this domain for SSH (for future, if we decide to use CloudFlare proxy features for other domains)
-- worker.ssh.typingrealm.com - $WORKER_IP
+- worker.ssh.typingrealm.org - $WORKER_IP
