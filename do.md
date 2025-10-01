@@ -62,4 +62,3 @@ This is when we need floating IPs.
   - Reserve in Datacenter Region - will reserve it, and you can assign to any droplets later
 
 > When IP is reserved, but is not assigned to the droplet - it is changed for $5 a month. So it's better to use `Assign to Droplet` option, and later we can move it over to another droplet.
-
