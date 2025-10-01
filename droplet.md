@@ -242,6 +242,15 @@ For production env:
 
 Workers should only have the worker label. Infra should only be a single node (we store data on it).
 
+### Re-join new swarm
+
+To re-join the new swarm:
+
+- `docker swarm leave`
+- Edit /etc/wireguard/wg0.conf for the new network, restart wg0.
+- Join the swarm as a worker node
+- Set up necessary labels
+
 ## Reboot
 
 Reboot after whole setup, just to make sure everything is properly restarted.
