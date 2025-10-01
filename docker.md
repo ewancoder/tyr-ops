@@ -36,14 +36,14 @@ Since nodes are not tags, we cannot set multiple values for the same key. So we 
 > IMPORTANT NOTE: this documentation will be updated later. We are moving to consistent naming scheme, so it's now `tyr-prod-infra` and `tyr-dev-worker` labels (including the `tyr` scope).
 
 - **do-main** - Digital Ocean main (manager) node
-  - Label: prod-infra=true
-  - Label: prod-worker=true
+  - Label: tyr-prod-infra=true
+  - Label: tyr-prod-worker=true
   - Label: id=domain - this is used when we need to deploy something 100% to a SINGLE main node
 - **do-worker** - Digital Ocean worker node
-  - Label: prod-worker=true
+  - Label: tyr-prod-worker=true
 - **ivanpc** - My current PC
-  - Label: dev-infra=true
-  - Label: dev-worker=true
+  - Label: tyr-dev-infra=true
+  - Label: tyr-dev-worker=true
 
 When deploying services:
 
