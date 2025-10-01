@@ -16,3 +16,7 @@
 `-I` allows specifying a pattern that will be substituted with arguments, instead of just substituting at the end.
 
 `echo a | xargs -I{} something {} somethingelse` = `something a somethingelse`
+
+## run0
+
+`run0` - more secure alternative to `sudo`, introduced in `systemd`
