@@ -5,11 +5,11 @@
 - Copy `.github` folder, change project-specific env vars in `deploy.yml`
 - Tweak `.env.$ENV` files & `swarm-compose.yml`
   - Do not forget to update `ghcr:ewancoder` to `ghcr:ewancoder-tyr` for tyr packages
-- Adjust `README.md` to show all the badges
 - Upgrade `HostExtensions.cs` to the latest versions (supporting Swarm secrets reading)
   - And update `Program.cs` if needed
   - Also we need to update csproj, and Packages.props files, cause we added more deps.
 - Create needed infra on cluster
+- After everything is working - adjust `README.md` to show all the badges
 
 Short example of upgrading infra for a new project:
 
@@ -29,6 +29,7 @@ Make sure secrets are tyr:tyr 600.
 - Set up repository-level secrets:
   - `API_SONAR_TOKEN`
   - `WEB_SONAR_TOKEN`
+  - `BE_FETCH_SONAR_TOKEN` - example for a project with `Be_Fetch` backend (nitrotype-tracker)
 
 - Create folders on both prod-infra and dev-infra machines:
   - app/{postgres,cache}
