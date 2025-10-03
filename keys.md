@@ -1,5 +1,30 @@
 # Keys
 
+## System keyrings
+
+System may cache different keys using `pinentry` programs (either shell or gui), storing the cached keys in a system **keyring**. Default path for keyrings: `~/.local/share/keyrings`, you can specify default keyring in `~/.local/share/keyrings/default` file, and the default is usually `~/.local/share/keyrings/Default_keyring.keyring`.
+
+For GPG, you can specify the following options in `~/.gnupg/gpg.conf`:
+
+```
+no-default-keyring
+keyring ~/.local/share/keyrings/gpg.keyring # keyring path
+```
+
+(although I'm not doing that, just using the default one)
+
+> You can create `/etc/skel/.gnupg/*` files, they will be copied over to users when they are added to the system.
+
+Options for `~/.gnupg/gpg-agent.conf`:
+
+```
+pinentry-program /usr/bin/pinentry-tty
+```
+
+Then: `gpgconf --reload gpg-agent`.
+
+> `pinentry-tty` also needs your `GPG_TTY` variable set, so add this to `~/.zproflie`: `export GPG_TTY=$(tty)`
+
 ## My keys inventory
 
 - Git (gpg) - main key for signing commits for personal projects, including signing subkey
