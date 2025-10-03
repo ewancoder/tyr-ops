@@ -36,3 +36,14 @@ Create all necessary secrets:
 For specific apps:
 
 - `tyr-prod-APP-sec-env`
+
+## Copy over helpful scripts
+
+- `~/scripts` folder of the tyr user
+
+Set up cron jobs:
+
+1. SKIP FOR NOW. Rebalance: insert the following into `sudo crontab -e`: `0 0 * * * /home/tyr/scripts/rebalance.sh >> /tmp/rebalance.log 2>&1`
+2. Backups: WIP (we want to backup /data folder and tyr ~/ home folder, to at least 2 other nodes)
+
+Rebalance takes a long time, and is resource consuming. But it's good to run it in case we restart nodes. However, since we have just a few nodes, we can afford running the script manually if we reboot it. So just run `~/scripts/rebalance.sh` when needed.

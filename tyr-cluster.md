@@ -226,3 +226,18 @@ Stored in: `tyr-$ENV-sec-secrets` secret.
 - `SeqUri` - URL for Seq logs ingestion
 - `DpCertPassword` - Password for data protection certificate
 - `GlobalCacheConnectionString` - Connection string to the Global cache (shared between services of one env, for things like data protection)
+
+## Folders on the leader node
+
+We have the following folders on the leader node ~/ tyr home dir:
+
+- `~/security` - keys, certs, other security stuff
+- `~/scripts` - helpful scripts for the server
+
+One of the scripts is:
+
+### ~/scripts/rebalance.sh
+
+This script rebalances all the services with more than one replica (stateless swarm services) so that there is zero downtime and all the nodes are used even after reboots.
+
+It runs every night (UTC 00:00) via cron job, set up in [leader-node.md](leader-node.md) doc.
