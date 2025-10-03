@@ -71,15 +71,7 @@ Infrastructure environment-agnostic data is stored at `/data/tyr/infra`, environ
 
 ### Seq logging
 
-Seq logging sets up the following data fields in its API Key application properties:
-
-- `Application=CamelCaseBusinessAppName` (AirCaptain, FoulBot)
-- `App = the same ^`
-- `Service=tyr-prod-aircaptain_api` (full docker stack name)
-- `Environment=Production/Development/etc`
-- `Env = the same ^`
-
-The name of the API key itself is a docker service name because it uniquely identifies separate API keys.
+See [seq.md](seq.md).
 
 ## Secrets
 
