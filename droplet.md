@@ -15,6 +15,33 @@ alias sudo='run0'
 
 > Add it at the very beginning of the ~/.bashrc, otherwise console won't be colored after initial login.
 
+## Add swap
+
+```
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo vim /etc/fstab
+```
+
+Add this to fstab: `/swapfile none swap sw 0 0`
+
+Adjust swappiness:
+- Check: `cat /proc/sys/vm/swappiness` (default is 60)
+- Set:
+  - `sudo sysctl vm.swappiness=20` - temporary
+  - `echo "vm.swappiness=20" | sudo tee /etc/sysctl.d/99-swappiness.conf` - permanent
+- Check: `cat /proc/sys/vm/vfs_cache_pressure` (default is 100)
+  - Lower value (50) - keep cache in RAM longer, faster file access
+  - Higher value (200) - reclaim aggressively, free RAM sooner
+  - For low-memory servers - keep around 50-100
+- Set:
+  - `sudo systemctl vm.vfs_cache_pressure=50`
+  - `echo "vm.vfs_cache_pressure=50" | sudo tee /etc/sysctl.d/99-vfs_cache_pressure.conf
+
+- Reboot to test that changes persist.
+
 ## Setup SSH user
 
 We don't want root login to be possible even via SSH.
