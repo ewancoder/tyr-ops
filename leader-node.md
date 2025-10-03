@@ -40,6 +40,8 @@ For specific apps:
 ## Copy over helpful scripts
 
 - `~/scripts` folder of the tyr user
+  - `rebalance.sh` and `fast-rebalance.sh` - to rebalance the nodes after node reboot / add
+  - `reload-caddy.sh` - for reloading Caddy config after changing it with zero downtime
 
 Set up cron jobs:
 
