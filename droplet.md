@@ -65,6 +65,20 @@ sudo apt upgrade
 
 ## Install wireguard & connect to mesh
 
+The addresses for machines that can be used instead of IPs:
+
+- `domain1.swarm.typingrealm.org` - leader node
+  - Alt: `ssh.typingrealm.org, typingrealm.org`
+- `worker51.swarm.typingrealm.org` - first worker node
+  - BUT: Use in-cluster IP address instead, to route the traffic via datacenter
+  - Alt: `worker.ssh.typingrealm.org`
+- `ivanpc2.swarm.typingrealm.org` - my pc / dev machine
+  - Alt: `ivanpc.typingrealm.org`
+
+> The numbers are the IP addresses that we have in the network.
+
+Run these:
+
 - `sudo apt install wireguard`
 - `mkdir security && cd security`
 - `mkdir wg && cd wg`
@@ -77,6 +91,16 @@ Create `/etc/wireguard/wg0.conf`:
 > If setting up a new LEADER node - copy the config from the previous leader node, containing all the records of all the nodes. Also do not forget to update ALL configurations of all other worker nodes to point to the new leader.
 
 > `ivanpc.typingrealm.org` - my machine PC, can be used instead of the IP
+
+### Allow IP forwarding
+
+This step needs to be done on a NEW LEADER node, because by default it will not forward traffic between nodes: My PC won't be able to talk to Worker1 for example.
+
+- `sudo /usr/sbin/iptables -A FORWARD -i wg0 -o wg0 -j ACCEPT`
+- `sudo iptables -A FORWARD -o wg0 -i wg0 -j ACCEPT`
+- `sudo apt install iptables-persistent` - and agree on saving current iptables rules
+  - Alternatively: `sudo iptables-save > /etc/iptables/rules.v4`
+- Reboot to check that it's persisted (pings are working between Worker nodes / PC)
 
 ### Example of Leader machine config
 
