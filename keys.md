@@ -39,6 +39,7 @@ Then: `gpgconf --reload gpg-agent`.
   - domain - (do-main-lon) connection to main DigitalOcean droplet (comment: ewancoder@ivanpc-domain)
   - doworker - (do-worker-lon-1) connection to worker DigitalOcean droplet
   - github - personal github account
+  - gitlab - personal gitlab account
 - TyR infra SSH keys (stored on Main PC)
   - github2domain - connection from github actions to do-main server
     - comment: ewancoder@github-domain

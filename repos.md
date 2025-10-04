@@ -10,6 +10,32 @@ So all repositories related to TyR will eventually migrate to `https://github.co
 
 This has a disadvantage of not having them in my public profile, but advantage of having them all nicely scoped together and having an ability to manage organization-wide secrets for github actions.
 
+## Names and origins
+
+- `origin` - `ewancoder-tyr` - main organization for deployment & all pipelines & main ORIGIN of the project - source of truth (including sonar analysis)
+- `gh' - `ewancoder` - my personal account, additional mirror remote for recognition & for code links from sonar
+  - Sonar is using `ewancoder` because I have a *legacy* free Plan on it, which allows custom gates etc. I cannot do this on a new organization
+- `gi` - gitlab mirror, also `ewancoder/projectname`
+  - For gitlab projects:
+    - Make public
+    - Do not enable anything (it creates .gitlab-ci.yml, we need empty repo)
+
+If we want to etable SAST or Secret Detection, we can always create the `.gitlab-ci.yml` file in the root of the repo:
+
+```
+stages:
+- test
+- secret-detection
+sast:
+  stage: test
+include:
+- template: Security/Secret-Detection.gitlab-ci.yml
+variables:
+  SECRET_DETECTION_ENABLED: 'true'
+secret_detection:
+  stage: secret-detection
+```
+
 ## Organization
 
 We created a new organization `ewancoder-tyr`.
