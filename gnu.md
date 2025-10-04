@@ -11,6 +11,8 @@
 
 `n2` - will pass by pairs, and etc.
 
+`-L1` - read one line at a time, when input is multiline.
+
 ### -I
 
 `-I` allows specifying a pattern that will be substituted with arguments, instead of just substituting at the end.
