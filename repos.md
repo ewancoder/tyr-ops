@@ -19,6 +19,7 @@ This has a disadvantage of not having them in my public profile, but advantage o
   - For gitlab projects:
     - Make public
     - Do not enable anything (it creates .gitlab-ci.yml, we need empty repo)
+    - Allow force-push on Main branch (in Branch settings)
 
 If we want to etable SAST or Secret Detection, we can always create the `.gitlab-ci.yml` file in the root of the repo:
 
