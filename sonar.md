@@ -20,3 +20,18 @@ Open both projects, and for each:
 4. Deploy (analyze) them, so that the branches tab becomes active.
 5. Make sure `develop` branch is included in a pattern of long-running branches.
   - pattern: `((branch|release)-.*)|(develop)` (first part is SonarCloud default).
+
+## Naming convention
+
+- Organization - `ewancoder`, because I have a **Legacy** free plan that allows changing things
+- Repo - my project mirror (`ewancoder/kartman`, `ewancoder/habits`)
+- Project key / project name (since repos are without tyr, project key/name also without tyr):
+  - API - `ewancoder-habits-api` / `habits-api`
+  - Web - `ewancoder-habits-web` / `habits-web`
+  - BE Fetch - `ewancoder-habits-be-fetch` / `habits-be-fetch`
+  - etc
+
+Secrets:
+
+- API - `API_SONAR_TOKEN`
+- Web - `WEB_SONAR_TOKEN`
