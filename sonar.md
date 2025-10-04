@@ -35,3 +35,16 @@ Secrets:
 
 - API - `API_SONAR_TOKEN`
 - Web - `WEB_SONAR_TOKEN`
+
+## Web (frontend) repo configuration
+
+Add the following file to the root of Web project: `sonar-project.properties`
+
+```
+sonar.projectKey=ewancoder-app-web
+sonar.organization=ewancoder
+```
+
+## Additional notes
+
+After pushing main branch - set up regex for long-lived branches to include `develop` branch.
