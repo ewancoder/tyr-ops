@@ -8,7 +8,9 @@ In future we might rename it to `typingrealm`.
 
 So all repositories related to TyR will eventually migrate to `https://github.com/ewancoder-tyr`.
 
-This has a disadvantage of not having them in my public profile, but advantage of having them all nicely scoped together and having an ability to manage organization-wide secrets for github actions.
+The projects that belong to `ewancoder-tyr` are mirrored on my main `ewancoder` profile. We only need `ewancoder-tyr` for sharing the secrets between apps, so we only place projects that need deployment to this org. Anything else can live on my main profile only (with maybe gitlab backup, but no need for second github repo).
+
+> We also have `ewancoder-archive` projects where I'm moving any repos that need to be deleted. Just in case I need them in future.
 
 ## Names and origins
 
