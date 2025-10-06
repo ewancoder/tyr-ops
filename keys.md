@@ -108,6 +108,9 @@ Usage scenarios:
 
 My locations:
 
+- (security)/work - work-related stuff
+- (security) - location for reg keys like crypt etc
+- (security)/ssh - symlinked to home/.ssh
 - (security)/gnupg - symlinked to home/.gnupg
 - (security)/backup - backup of master keys (exported for future import)
 
