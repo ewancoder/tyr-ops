@@ -43,3 +43,9 @@ Then:
 
 - `tar -xzpf /tmp/archive.tar.gz -C /data/app`
   - `x` - extract
+
+## Docker
+
+You can run a command inside docker as a user:
+
+- `docker exec -it --user 2000:2000 containername command`
