@@ -49,3 +49,10 @@ Then:
 You can run a command inside docker as a user:
 
 - `docker exec -it --user 2000:2000 containername command`
+
+## lsblk
+
+You can visualize drives with this:
+
+- `lsblk -f`
+- `lsblk -o NAME,SIZE,LABEL` - better alternative, shows sizes of whole drives
