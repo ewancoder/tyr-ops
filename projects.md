@@ -118,6 +118,7 @@ These are the forks of other people's repositories I made to not lose them if th
   - `wmii.libixp` - updated wmii / update, exported from a different hosting
   - `wmii-1` - fork of wmii (oldest) from an existing github repo
 - `oh-my-zsh` - zsh library for customization
+- `bsol` - blue screen of life GRUB theme
 
 ## Corporate repos
 
