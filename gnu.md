@@ -60,3 +60,9 @@ You can visualize drives with this:
 ## Zenity
 
 Zenity is an app that can show graphical dialogues from scripts (very useful for our rdpwin script). It is a dependency of Steam, so will always be istalled.
+
+## dd
+
+Write an iso to usb:
+
+- `sudo dd if=path-to-iso.iso of=/dev/sdb bs=4M status=progress oflag=sync`
