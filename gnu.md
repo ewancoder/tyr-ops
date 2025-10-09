@@ -85,6 +85,8 @@ I guess it's not possible to suspend with Nvidia always on mode in the laptop. I
 
 ## ASUS laptop tweaks
 
+> TODO: Move this section to a separate file.
+
 Check current status:
 
 ```
@@ -105,3 +107,9 @@ grep -A 3 "VGA" | lsmod | grep nvidia` - check current status
 
 - `/sys/class/power_supply/BAT0/capacity` - 73
 - `/sys/class/power_supply/BAT0/status` - discharging
+
+### Sleep
+
+Basically we cannot achieve reliable sleep with neither Discrete nor Integrated modes, we need to use Hybrid mode. In Discrete mode we cannot resume from sleep, in Integrated mode we cannot reach sleep. Even reboot doesn't work in Integrated mode.
+
+We need to use Windows `g-helper` to change modes instead of Linux, more reliable for this laptop.
