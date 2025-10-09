@@ -66,3 +66,42 @@ Zenity is an app that can show graphical dialogues from scripts (very useful for
 Write an iso to usb:
 
 - `sudo dd if=path-to-iso.iso of=/dev/sdb bs=4M status=progress oflag=sync`
+
+## Sleep setup
+
+- `cat /sys/power/mem_sleep` shows with `[]` bracked which one is currently active
+  - `s2idle` - buggy windows low-energy mode, usually on laptops
+  - `deep` - true S3 level sleep, what we need
+
+If it's `s2idle`, we need to edit GRUB parameters to pass to kernel to use `S3`. Edit `/etc/default/grub` and regenerate config:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="... mem_sleep_default=deep"
+```
+
+> BUT it bricks the laptop lol. We need to hold power button for a whole minute to do a hard-hard-reset then. Resume still didn't work from the box.
+
+I guess it's not possible to suspend with Nvidia always on mode in the laptop. I need to either use integrated graphics, or move to hibernate / shutdown.
+
+## ASUS laptop tweaks
+
+Check current status:
+
+```
+supergfx -g
+lspci -k
+grep -A 3 "VGA" | lsmod | grep nvidia` - check current status
+```
+
+- `supergfxctl -m Integrated` - switch NVIDIA completely OFF (run everything off integrated graphics)
+- `supergfxctl -m Hybrid`
+- `supergfxctl -m Discrete`
+
+> Need to reboot after.
+
+> `supergfxctl` hangs and doesn't work when in Integrated mode cause no Nvidia GPU. So if you switch to Integrated mode - it's impossible to switch back (unless passing kernel params or using windows/asus/g-helper software)
+
+### Checking battery
+
+- `/sys/class/power_supply/BAT0/capacity` - 73
+- `/sys/class/power_supply/BAT0/status` - discharging
