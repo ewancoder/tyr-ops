@@ -160,6 +160,7 @@ Both windows are installed into the same bootloader. Clone it, point to both fro
   - Set up proxies for containers.
   - Pin (vpn-ed if needed) chatgpt/grok.
 - Connect bluetooth: mouse, headphones.
+- Install Surfingkeys to Firefox & load my config
 
 ### Windows Maintenance / install
 
