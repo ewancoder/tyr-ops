@@ -11,9 +11,62 @@ A complete overhauling documentation for OS reinstall, both Linux and Windows, f
 - `cryptsetup config /dev/disk --label label`
 - `e2label /dev/mapper/disk label`
 
+## UEFI UPDATE
+
+> Generate UKI if not generated yet
+> `bootctl install` if used grub, before rebooting, for easy EFI enrollment
+
+- Reboot, enroll bootloader and linux EFIs, load to linux with Secure Boot on.
+
+(after Secure Boot is on, and system is loaded)
+- pacman -S fwupd
+- fwupdmgr refresh
+- fwupdmgr get-updates
+- fwupdmgr update
+
+Backup current keys (or export via bios):
+
+- pacman -S efitools
+- `mkdir sb && for var in PK KEK db dbx; do efi-readvar -v $var -o sb/${var}.esl; done`
+
+Reboot, set secure boot into Setup mode
+
+Install & enroll sbctl + old keys.
+
+> Consider copying existing keys from other machines, so that Arch Live CD is working seamlessly on all machines (store them on the same usb luks2 protected volume).
+
+- pacman -S sbctl
+- sbctl create-keys # to create new keys
+
+Merge db:
+
+- cert-to-efi-sig-list /var/lib/sbctl/keys/db/db.pem mydb.esl
+- cat db.esl mydb.esl > merged_db.esl
+
+Reboot, Turn secure boot into SETUP mode:
+
+- efi-updatevar -e -k /var/lib/sbctl/keys/KEK/KEK.key -f sb/old_dbx.esl dbx
+- efi-updatevar -e -k /var/lib/sbctl/keys/KEK/KEK.key -f merged_db.esl db
+- chattr -i /sys/firmware/efi/efivars/db-*
+- sbctl enroll-keys --partial PK KEK -fm
+
+Reboot, check that it's User mode. Boot to system, regenerate PKI for testing :)
+
 ## Partitioning
 
 My main PC has 3 drives: main, secondary, data.
+
+### Laptop
+
+For laptop it's rather simple, 2 drives:
+
+- /main/1 - EFI, 1G
+- /main/2 - Linux root, 200G, / (encrypted)
+- /main/3 - Linux data, 500G, /mnt/data (encrypted)
+- /main/4-5-6 - Microsoft System (reserved, system, recovery), 500G, system for Work+Gaming, encrypted
+
+- /secondary/1 - Linux backup, 200G, /mnt/backup (encrypted)
+- /secondary/2 - Media/Data/Games, 400-500G, shared, NTFS, NOT encrypted
 
 ### main
 
@@ -141,19 +194,18 @@ bootctl install
 
 ### After installing windows x2
 
-Both windows are installed into the same bootloader. Clone it, point to both from systemd-boot entries, load to each Windows and edit BCD using EasyBCD utility.
-
-### Moved outside of the root FS (for backup)
-
-- Flatpak user folder: ~/.var/app (includes Zen settings): /mnt/data/home/.var
-- SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
+Both windows are installed into the same bootloader. Clone it, point to both from systemd-boot entries, load to each Windows and edit BCD to only leave one entry.
 
 ## OS setup
 
 ### Linux Maintenance
 
+- Flatpak user folder: ~/.var/app (includes Zen settings): /mnt/data/home/.var
+- SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
+
 - Sign in to Dropbox, link the device.
 - Sign in to Telegram app.
+  - No sound for notifications.
 - If Zen cache backup is lost/missing:
   - Sign in to Zen (main acc), let extensions install.
   - Set up workspaces (personal/work) and containers (personal/work/vpn).
