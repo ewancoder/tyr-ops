@@ -203,13 +203,14 @@ Both windows are installed into the same bootloader. Clone it, point to both fro
 #### During install actions
 
 - Before install - copy /mnt/data data from some other linux so we have Dropbox/Security/etc files.
-- (copy this) SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
-- Flatpak user folder: ~/.var/app (includes Zen settings): /mnt/data/home/.var
+  - (copy this) SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
+  - Flatpak user folder: ~/.var/app (includes Zen settings): /mnt/data/home/.var
 
 This doesn't work during hostinstall/livecd, so we need to do this manually rigth after booting into the system:
 
 1. Re-install bootctl so it creates EFI record, from within installed and loaded system.
 2. Re-enroll all drives to TPM2 (it asks for password after install).
+3. Enable UFW - for now not automated (sudo ufw enable)
 
 #### Setting up
 
