@@ -238,9 +238,21 @@ Rufus:
 - Check disable data collection
 - Uncheck disable bitlocker
 - Check use windows CA 2023
+- To make sure PRO version is installed: add Sources/PID.txt file with this content:
+
+```
+[PID]
+Value=VK7JG-NPHTM-C97JM-9MPGT-3V66T
+```
+
+Laptop quirks:
+- Unfortunately Rufus-created ISO didn't work for laptop (missing secureboot keys for Windows bootmgr? cause Rufus bootloader has loaded, it just couldn't load the Windows one)
+  - So we needed to turn off secure boot for initial install
+  - Then go back to the settings and re-enable it
+  - Then activate BitLocker manually
 
 Install:
-- Insert Ethernet cable (no WiFi for Windows)
+- Insert Ethernet cable (no WiFi for PC AND Laptop)
 - Language: US, US
 - Keyboard: Dvorak
 - Install new, Don't have a key, 11Pro, US, Dvorak, Skip other layouts
