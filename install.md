@@ -218,12 +218,16 @@ This doesn't work during hostinstall/livecd, so we need to do this manually rigt
 - Sign in to Dropbox, link the device.
 - Sign in to Telegram app.
   - No sound for notifications.
-- If Zen cache backup is lost/missing:
-  - Sign in to Zen (main acc), let extensions install.
-  - Set up workspaces (personal/work) and containers (personal/work/vpn).
-  - Set up proxies for containers.
+- If Zen cache backup is lost/missing and/or on Windows:
+  - skip import, google
+  - Make default browser
+  - personal space popcorn icon + personal container
+  - work space pc icon + work container
+  - setup containers: personal, work, vpn
+  - sign in, let extensions install
+  - Surfingkeys, use GIST settings
+  - Set up proxies for containers (if have any, when needed).
   - Pin (vpn-ed if needed) chatgpt/grok.
-  - Surfingkeys: load gist
 - Connect bluetooth: mouse, headphones.
 - Install Surfingkeys to Firefox & load my config
 - Sign in to Steam, set up in the same way as for Gaming windows (see below)
@@ -261,27 +265,30 @@ Install:
 - Update everything, activate if needed (check activation)
 - Delete US (qwerty) keyboard, add Russian input method (uncheck everything when adding)
 - Zen
-  - skip import, google
-  - personal space popcorn icon personal container
-  - work space pc icon work container
-  - setup containers: personal, work, vpn
-  - sign in
+  - look at Linux guide - repeat it
+- Install G-Helper (download/run)
+  - Ultimate mode (standard/optimized when needed)
+  - Balanced fans (turbo when needed)
+  - Red Highlight keyboard mode
+  - Battery charge - 80% (TODO: consider doing this on Linux)
 - If new drives
   - Install Magician, test them, make sure OP is on, set Performance mode
 - Turn on Bitlocker (will bind to 0 2 4 11 unfortunately due to custom key, not to 7 11, but this is supposed to be also secure)
   - NDA drive - autounlock, no password - more secure than password (bound to TPM)
 - Power Plan: monitor always on, sleep disabled, power button does nothing
+  - For laptop also, even lid does nothing - I will set it up later as needed, when needed
 - Timezone: Tbilisi
 - Install Bluetooth & WiFi drivers from x870e Pro 1.1
+  - On laptop just connect to wifi, drivers auto-installed
 - Connect to wifi/bluetooth devices, disconnect ethernet
 - Install qBitTorrent app - it also disabled Windows Path length limitation
 - Sign in to Telegram
-  - (work-pc) Start with Windows
+  - (work-pc/laptop) Start with Windows
   - Disable notification sound
 - Bluetooth: connect mouse/headphones if needed
 - LogiOptions software for the Vertical mouse (pair dongle if needed)
 - NVidia App, game ready driver, do NOT optimize game, NO overlay, download and install driver, reboot
-- (work-pc) Steam
+- Steam (except work-pc, unless I want some light games during work, then there too)
   - Invisible
   - In-game: F12 performance, F11 screenshot, don't display notification for screenshot, top right fps
   - Interface: do not notify news, startup location - library
@@ -291,17 +298,13 @@ Install:
 - Run icons.reg, UTC.reg, regenerate time by Windows
 - (work-pc) DEV
   - VS2026: asp.net + .net desktop, tools import/export reset all settings if needed
+    - Sign in with GitHub, sign in with Microsoft account
     - Set C# 2005 (otherwise ctrl+w doesn't work)
     - VSVim, handle all by VS except Ctrl+W, delete window.closewindow ctrl+w shortcut
-  - Git
+  - Git: low transparency, 14pt, 130x30, random background dark color
   - .NET 8, 9 SDKs
   - Teams, Zoom, Slack - log in
   - Sign in to Windows APP VDI
-- Zen
-  - Set up workspaces etc (look above for linux)
-  - Log in
-  - Surfingkeys, use GIST settings
-  - Make default browser
 - Disable keyboard shortcuts for sticky keys
 - Taskbar left, search hide, all icons remove, task view off, widgets off, show icon where window is open, combine when taskbar is full on both monitors
 - Install PIA, need VPN in Belarus / other country
