@@ -64,6 +64,7 @@ For laptop it's rather simple, 2 drives:
 - /main/2 - Linux root, 200G, / (encrypted)
 - /main/3 - Linux data, 500G, /mnt/data (encrypted)
 - /main/4-5-6 - Microsoft System (reserved, system, recovery), 500G, system for Work+Gaming, encrypted
+- /main/7(or 6 if windows did not reserve) - 100G, Windows Projects/Work files (encrypted)
 
 - /secondary/1 - Linux backup, 200G, /mnt/backup (encrypted)
 - /secondary/2 - Media/Data/Games, 400-500G, shared, NTFS, NOT encrypted
