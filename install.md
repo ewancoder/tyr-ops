@@ -272,7 +272,7 @@ Install:
 - (work-pc) Steam
   - Invisible
   - In-game: F12 performance, F11 screenshot, don't display notification for screenshot, top right fps
-  - Interface: do not notify news
+  - Interface: do not notify news, startup location - library
   - Downloads: allow downloads during gameplay
   - Notifications: disable show toast when friend joins a game
   - Add library: m/Media, load all cloud saves, run couple games to install vcredist
