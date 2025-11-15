@@ -315,3 +315,8 @@ Install:
   - For Gaming - games/media
 - Unpin all from start
 - Install Spotify - login
+
+### Software setup (consolidated)
+
+- VS Code
+  - Extensions: Vim, ShellCheck, Angular Language Service
