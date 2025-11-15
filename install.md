@@ -200,8 +200,18 @@ Both windows are installed into the same bootloader. Clone it, point to both fro
 
 ### Linux Maintenance
 
+#### During install actions
+
+- Before install - copy /mnt/data data from some other linux so we have Dropbox/Security/etc files.
+- (copy this) SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
 - Flatpak user folder: ~/.var/app (includes Zen settings): /mnt/data/home/.var
-- SbCtl keys: /var/lib/sbctl -> /mnt/data/security/sbctl
+
+This doesn't work during hostinstall/livecd, so we need to do this manually rigth after booting into the system:
+
+1. Re-install bootctl so it creates EFI record, from within installed and loaded system.
+2. Re-enroll all drives to TPM2 (it asks for password after install).
+
+#### Setting up
 
 - Sign in to Dropbox, link the device.
 - Sign in to Telegram app.
@@ -213,6 +223,7 @@ Both windows are installed into the same bootloader. Clone it, point to both fro
   - Pin (vpn-ed if needed) chatgpt/grok.
 - Connect bluetooth: mouse, headphones.
 - Install Surfingkeys to Firefox & load my config
+- Sign in to Steam, set up in the same way as for Gaming windows (see below)
 
 ### Windows Maintenance / install
 
