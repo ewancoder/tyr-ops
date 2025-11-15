@@ -208,6 +208,7 @@ Both windows are installed into the same bootloader. Clone it, point to both fro
 
 This doesn't work during hostinstall/livecd, so we need to do this manually rigth after booting into the system:
 
+0. (to delete old entries): efibootmgr, efibootmgr -b 0000 -B (0000 id of it, -B deletes)
 1. Re-install bootctl so it creates EFI record, from within installed and loaded system.
 2. Re-enroll all drives to TPM2 (it asks for password after install).
 3. Enable UFW - for now not automated (sudo ufw enable)
@@ -222,6 +223,7 @@ This doesn't work during hostinstall/livecd, so we need to do this manually rigt
   - Set up workspaces (personal/work) and containers (personal/work/vpn).
   - Set up proxies for containers.
   - Pin (vpn-ed if needed) chatgpt/grok.
+  - Surfingkeys: load gist
 - Connect bluetooth: mouse, headphones.
 - Install Surfingkeys to Firefox & load my config
 - Sign in to Steam, set up in the same way as for Gaming windows (see below)
