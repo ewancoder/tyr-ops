@@ -67,6 +67,13 @@ Write an iso to usb:
 
 - `sudo dd if=path-to-iso.iso of=/dev/sdb bs=4M status=progress oflag=sync`
 
+## udisksctl
+
+Can be used instead of mount/umount to mount partitions/usb drives by user (without sudo).
+
+- `udisksctl lock/unlock -b /dev/device` - lock/unlock if it's a LUKS-encrypted partition
+- `udisksctl mount/unmount -b /dev/device (or /dev/dm-X in case of luks)` - mount partition
+
 ## Sleep setup
 
 - `cat /sys/power/mem_sleep` shows with `[]` bracked which one is currently active
