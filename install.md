@@ -263,8 +263,13 @@ Install:
 - Install new, Don't have a key, 11Pro, US, Dvorak, Skip other layouts
 - Do not show again and skip Gigabyte center
 - Delete OneDrive
+- Change PC name to odinwin/thorwin/etc, odinwingaming/odinwinwork
 - Update everything, activate if needed (check activation)
 - Delete US (qwerty) keyboard, add Russian input method (uncheck everything when adding)
+- (optional) Select language for non-unicode programs - russian (needed for russian in console apps)
+  - If this is done - disable notepad spellcheck, otherwise it highlights everything
+- Enable RDP access
+- Create second desktop (Fun and Work)
 - Zen
   - look at Linux guide - repeat it
 - Install G-Helper (download/run)
@@ -277,7 +282,7 @@ Install:
 - Turn on Bitlocker (will bind to 0 2 4 11 unfortunately due to custom key, not to 7 11, but this is supposed to be also secure)
   - NDA drive - autounlock, no password - more secure than password (bound to TPM)
 - Power Plan: monitor always on, sleep disabled, power button does nothing
-  - For laptop also, even lid does nothing - I will set it up later as needed, when needed
+  - For laptop close lid = sleep, for easier sleep when needed
 - Timezone: Tbilisi
 - Install Bluetooth & WiFi drivers from x870e Pro 1.1
   - On laptop just connect to wifi, drivers auto-installed
@@ -298,14 +303,33 @@ Install:
   - Add library: m/Media, load all cloud saves, run couple games to install vcredist
 - Run icons.reg, UTC.reg, regenerate time by Windows
 - (work-pc) DEV
+  - ln -s /n/work ~/work (NDA volume)
   - VS2026: asp.net + .net desktop, tools import/export reset all settings if needed
     - Sign in with GitHub, sign in with Microsoft account
     - Set C# 2005 (otherwise ctrl+w doesn't work)
     - VSVim, handle all by VS except Ctrl+W, delete window.closewindow ctrl+w shortcut
+    - Extensions
+      - NCrunch, half of cores (8), 16 background threads + fast lane, fastest, run all, 100Gb RDI on C:
+      - Unobtrusive code, collapsed by default - false
+      - SonarQube (connect if needed)
   - Git: low transparency, 14pt, 130x30, random background dark color
   - .NET 8, 9 SDKs
   - Teams, Zoom, Slack - log in
-  - Sign in to Windows APP VDI
+  - Sign in to Windows APP VDI (also do this on Gaming Win just for convenience)
+  - Clone dotfiles to ~/dotfiles
+    - move dotfiles/.git to ~/.git
+    - remove the ~/dotfiles dir
+    - do git reset --hard
+    - rename ~/.git to ~/.dotfiles
+    - restart bash
+  - Edit .gitconfig-work, git update-index --assume-unchanged .gitconfig-work
+  - Copy ~/.gnupg from linux (or import/export needed signing keys)
+    - If copied - delete gpg-agent.conf, pinentry-tty doesn't work on windows
+    - gpg --list-secret-keys --with-subkey-fingerprints
+    - gpg --export-secret-subkey ID > key.gpg
+    - base64 key.gpg ---> send to where it's needed, then base64 -d DATA > key.gpg
+    - gpg --import key.gpg
+    - gpg --editkey ID, trust 5 (ultimate)
 - Disable keyboard shortcuts for sticky keys
 - Taskbar left, search hide, all icons remove, task view off, widgets off, show icon where window is open, combine when taskbar is full on both monitors
 - Install PIA, need VPN in Belarus / other country
@@ -320,3 +344,16 @@ Install:
 
 - VS Code
   - Extensions: Vim, ShellCheck, Angular Language Service
+- MegaSync
+  - On encrypted partition
+  - Sync `/cloud` folder as main folder for all cloud files
+    - `/mnt/data/cloud` on linux
+    - `(d/c)/cloud` on windows
+
+### BYOD Windows
+
+- OEM (Home) / or custom Pro license
+- Online account, location/etc all on, everything else skip, keep setup mail app
+- Name of device (myname) for now, rename later
+- GHelper - performance/turbo for sure
+- Join BYOD
