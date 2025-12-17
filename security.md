@@ -32,6 +32,9 @@ I have split my use cases into several security tiers, protected in a different 
   - Bitwarden vault
   - Google / Mozilla accounts
   - Work email / account
+  - (maybe) Cloud (dropbox, mega, etc)
+    - For accessing it even when BitWarden access is lost
+      - Consider other websites that need this too
 
 Critical resources are protected using proper MFA with a separate device, using Microsoft Authenticator (with backups).
 The passwords for them are also not being stored in any password managers (google, mozilla, or bitwarden).
