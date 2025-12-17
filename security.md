@@ -1,5 +1,56 @@
 # Security
 
+## Authentication
+
+### Password managers
+
+> My choice - Bitwarden.
+
+Password managers work similarly to how gocryptfs/encfs over cloud/Dropbox/etc works: it encrypts data on your local machine, and only transfers/syncs encrypted data.
+
+Hence, the main security problem is - malware. Since password managers have your passwords/OTP/passkeys in memory - malware process might be able to read your vault from memory. So, when using password managers - the main security concern should be keeping the device malware-free.
+
+Bitwarden allows us to store the following things:
+
+- Passwords
+- TOTP codes
+- Passkeys
+
+When storing TOTP codes or passkeys in bitwarden - they are essentially synced between all your devices, and any device that has the vault unlocked has access to both passwords and TOTP (or passkeys), rendering MFA (and passkeys) partially inefficient.
+
+If one device is compromised, where the vault is installed - the attacker will gain access to both passwords AND TOTP (or passkeys altogether), making it possible for the attacker to sign in to your websites, even those that are protected by MFA or using a passkey.
+
+This greatly enhances user convenience, though, as you have all your passkeys/TOTP readily available on all devices (and backed up in cloud / password manager).
+
+### Security tiers
+
+I have split my use cases into several security tiers, protected in a different way.
+
+1. Critical security resources
+  - Microsoft account (Microsoft Authenticator)
+  - Primary email
+  - Bitwarden vault
+  - Google / Mozilla accounts
+  - Work email / account
+
+Critical resources are protected using proper MFA with a separate device, using Microsoft Authenticator (with backups).
+The passwords for them are also not being stored in any password managers (google, mozilla, or bitwarden).
+Password is well-known by me and is stored in my head.
+
+> Some of them might be protected with hardware-locked passkeys (like Google account on Android).
+
+> In future, we might utilize YubiKey for the most important accounts.
+
+2. Medium security resources: GitHub, Atlassian, other important accounts
+
+Medium security resources are protected using Bitwarden TOTP MFA, or Bitwarden Passkeys.
+
+> Some of them might be protected by separate/proper MFA, and hardware-locked Passkeys.
+
+3. Low security resources: simracing planner, etc.
+
+Low security resources are protected using Bitwarden TOTP MFA, or Bitwarden Passkeys. Or no MFA altogether.
+
 ## Device security
 
 ### Secure boot
