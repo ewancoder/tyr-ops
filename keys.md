@@ -203,6 +203,28 @@ To generate a keypair:
 - `ssh-keygen -C "user@host-purpose" (ewancoder, ivanpc, domain/github)
   - filename: id_ed25519_domain/github
 
+#### Yubikey / hardware key
+
+To generate a keypair on the yubikey / hardware key:
+
+- `ssh-keygen -t ed25519-sk -O resident -O verify-required -C "user@yk-purpose"
+
+To re-export it:
+
+- `ssh-keygen -K`
+
+Do not cache it, use this in the `config`:
+
+- `IdentityAgent none`
+
+To disable the agent completely for this domain. Otherwise it doesn't work. It needs pin/touch every operation.
+
+To clean ssh-agent (if accidentally cached):
+
+- `ssh-add -D`
+
+> You can export/create key without passphrase, because YK already makes it so that private key will never leave the device.
+
 ### Connecting
 
 #### Adding entry to local known hosts
