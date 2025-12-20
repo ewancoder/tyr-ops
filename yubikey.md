@@ -17,3 +17,14 @@ Register passkeys (either passwordless passkeys, or MFA security keys) on websit
 ## Storing SSH
 
 Refer to keys.md.
+
+## Signing commits / GPG
+
+After moving a subkey to GPG, it can now be used without password (just pin) with key inserted.
+
+Some security settings might be adjusted:
+
+```
+ykman openpgp access set-signature-policy always/once
+ykman openpgp keys set-touch sig off/on/fixed/cached/cached-fixed
+```
