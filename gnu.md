@@ -19,6 +19,12 @@
 
 `echo a | xargs -I{} something {} somethingelse` = `something a somethingelse`
 
+## sed
+
+Delete first 10 lines from a file:
+
+`sed -i '1,10d' file.txt`
+
 ## run0
 
 `run0` - more secure alternative to `sudo`, introduced in `systemd`
