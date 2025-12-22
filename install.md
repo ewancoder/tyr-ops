@@ -372,3 +372,7 @@ Setup TPM+Pin on movable devices. For linux use --tpm-with-pin, for windows the 
 > If multibooting windows - make sure the necessary BCD is in the /efi/Microsoft folder, move back after it as necessary.
 
 > You can use FIDO (yubikey) for linux as an alternative to TPM+pin. In Windows you can use Fido for Windows Hello login (but only for online accounts).
+
+#### Fido device (on linux)
+
+systemd-cryptenroll --fido2-device=auto --fido2-with-client-pin=true --fido2-with-user-presence=true --fido2-with-user-verification=true
