@@ -357,3 +357,18 @@ Install:
 - Name of device (myname) for now, rename later
 - GHelper - performance/turbo for sure
 - Join BYOD
+
+### Security setup
+
+Setup TPM+Pin on movable devices. For linux use --tpm-with-pin, for windows the following:
+
+- gpedit.msc, Computer Configuration -> Administrative Templates -> Windows Components -> BitLocker Drive Encryption -> Operating System Drives
+  - Require additional authentication at startup - enabled, require with PIN & TPM
+  - Allow enhanced PINs for startup - enabled
+- gpupdate /force (or reboot)
+- manage-bde -protectors -add C: -TPMAndPIN
+- manage-bde -protectors -get C:
+
+> If multibooting windows - make sure the necessary BCD is in the /efi/Microsoft folder, move back after it as necessary.
+
+> You can use FIDO (yubikey) for linux as an alternative to TPM+pin. In Windows you can use Fido for Windows Hello login (but only for online accounts).
