@@ -17,3 +17,5 @@ On my PC, I have the following folders backing up to 2 other different drives:
 This is the script that is responsible for this: (backup.sh)[https://github.com/ewancoder/dotfiles/blob/master/.local/bin/backup.sh]
 
 We are also backing up configs/secrets (small data) to a separate encrypted archive shared in cloud so we can reuse it on different devices if needed.
+
+> The `/mnt/data/security-offline` folder is backed up only to other drives, not to cloud.
