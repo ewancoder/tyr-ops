@@ -376,3 +376,5 @@ Setup TPM+Pin on movable devices. For linux use --tpm-with-pin, for windows the 
 #### Fido device (on linux)
 
 systemd-cryptenroll --fido2-device=auto --fido2-with-client-pin=true --fido2-with-user-presence=true --fido2-with-user-verification=true
+
+> It looks like Linux only supports either TPM or Fido, one at a time, so we need to wipe TPM if we want to use Fido.
