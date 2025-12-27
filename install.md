@@ -219,16 +219,7 @@ This doesn't work during hostinstall/livecd, so we need to do this manually rigt
 - Sign in to Dropbox, link the device.
 - Sign in to Telegram app.
   - No sound for notifications.
-- If Zen cache backup is lost/missing and/or on Windows:
-  - skip import, google
-  - Make default browser
-  - personal space popcorn icon + personal container
-  - work space pc icon + work container
-  - setup containers: personal, work, vpn
-  - sign in, let extensions install
-  - Surfingkeys, use GIST settings
-  - Set up proxies for containers (if have any, when needed).
-  - Pin (vpn-ed if needed) chatgpt/grok.
+- Zen - set up from consolidation section (if backup is lost)
 - Connect bluetooth: mouse, headphones.
 - Install Surfingkeys to Firefox & load my config
 - Sign in to Steam, set up in the same way as for Gaming windows (see below)
@@ -270,8 +261,7 @@ Install:
   - If this is done - disable notepad spellcheck, otherwise it highlights everything
 - Enable RDP access
 - Create second desktop (Fun and Work)
-- Zen
-  - look at Linux guide - repeat it
+- Zen - set up from consolidation section
 - Install G-Helper (download/run)
   - Ultimate mode (standard/optimized when needed)
   - Balanced fans (turbo when needed)
@@ -342,6 +332,18 @@ Install:
 
 ### Software setup (consolidated)
 
+- Zen
+  - skip import, google
+  - Make default browser
+  - Sign in to bitwarden, disable mozilla default autofill
+  - personal space popcorn icon + personal container
+  - work space pc icon + work container
+  - setup containers: personal, work, vpn
+  - sign in, let extensions install
+  - Surfingkeys, use GIST settings
+  - Set up proxies for containers (if have any, when needed).
+  - Pin (vpn-ed if needed) chatgpt/grok.
+  - Never translate Russian
 - VS Code
   - Extensions: Vim, ShellCheck, Angular Language Service
 - MegaSync
