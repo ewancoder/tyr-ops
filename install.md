@@ -344,6 +344,7 @@ Install:
   - Set up proxies for containers (if have any, when needed).
   - Pin (vpn-ed if needed) chatgpt/grok.
   - Never translate Russian
+  - Sync workspaces
 - VS Code
   - Extensions: Vim, ShellCheck, Angular Language Service
 - MegaSync
