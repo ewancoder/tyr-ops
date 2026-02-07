@@ -2,6 +2,8 @@
 
 A complete overhauling documentation for OS reinstall, both Linux and Windows, from re-partitioning to setting up software.
 
+> Note: Latest partitioning scheme is migrating to [drives.md](drives.md).
+
 ## Useful tips
 
 1. You can label disks and address them by `/dev/disk/by-label/mylabel` instead of `/dev/nvmeXxX`:
