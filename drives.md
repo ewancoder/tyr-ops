@@ -29,11 +29,10 @@ My main personal PC. Used as a local media server (watching content), gaming, an
 
 ### 990 Pro drive, 4Tb
 
-- 500Gb, Backup partition (for Arch backups, encrypted)
-- 2Tb - Media (NTFS, shared between Linux/Windows) - for Media collection, Games, etc
-- 1178Gb - unallocated (need 1110)
+- Given to Server, for Media Downloads/storage
+- (need 1110 for OP)
 
 ### 980 Pro, 2Tb
 
-- Completely empty for now
+- 500Gb, Backup partition (for Arch backups, encrypted)
 - Need 560Gb overprovisioning
