@@ -40,3 +40,11 @@ wg pubkey < private > public
 - On **asgard**: enter this
 - Add necessary labels:
   - `docker node update --label-add tyr-dev-infra=true/tyr-dev-worker=true asgard`
+
+### Fix UFW rules
+
+For Swarm traffic to work, we need to open the following ports:
+
+- 2377/tcp - swarm management
+- 7946/tcp+udp - node communication
+- 4789/udp - overlay network
