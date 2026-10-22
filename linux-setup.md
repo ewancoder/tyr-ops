@@ -26,4 +26,6 @@ With my REAL script everything is automated mostly. This is the list of things w
 - Telegram -> connect
   - Notifications -> do not allow sound
 - Run through XPlane guide to set up everything that's required [FRESH] tag
+- Pair to the TV (lgtvcmd)
+  - TODO: Backup the database and restore it on install
 
