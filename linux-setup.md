@@ -17,7 +17,7 @@ With my REAL script everything is automated mostly. This is the list of things w
     - Untick Enable Steam Overlay
   - Notifications
     - Disable friend joins game
-  - Add library: Storage -> /mnt/games
+  - Add library: Storage -> /mnt/games, /mnt/games980
 - Connect to Gaming WG mesh
   - asgard 10.9.0.1, odin 10.9.0.2
  - yay tlauncher-installer
